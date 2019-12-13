@@ -20,6 +20,15 @@ $round: .25rem;
     border-radius: $round;
     background: $darkGrey;
     
+    &.large {
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     &:hover {
         color: white;
         background: black;

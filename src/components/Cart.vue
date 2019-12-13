@@ -4,8 +4,19 @@
         <img src="@/assets/icon-bag-white.svg" alt="cart">
         <section v-if="showModal" class="cart-modal">
             <article class="cart-item" v-for="item in cart" :key="item.serial">
-                {{item.title}}
+                <figure class="thumbnail">
+                    <img :src="require(`@/assets/${item.imgFile}`)" :alt="item.title">
+                </figure>
+                <h1>{{item.title}}</h1>
+                <p class="price">{{item.price}} kr</p>
+                <h2>{{item.shortDesc}}</h2>
+                <p class="serial">{{item.serial}}</p>
+
             </article>
+            <footer class="total">
+                <h1>Total</h1><h1>{{total.total}} kr</h1>
+            </footer>
+            <a href="#" class="btn large">Take my Money!</a>
         </section>
     </aside>
 </template>
@@ -64,8 +75,8 @@ export default {
         }
 
         .cart-modal {
-            width: 20rem;
-            height: 40rem;
+            width: 18rem;
+            padding: 1rem;
             background: white;
             position: absolute;
             top: 3.25rem;
@@ -85,6 +96,88 @@ export default {
                 margin-left: -0.625em;
                 margin-top: -0.625em;
             }
+
+            .cart-item {
+                display: grid;
+                margin: 0 0 .5rem 0;
+                padding-bottom: .5rem; 
+                grid-template-columns: 3rem 1fr 1fr;
+                grid-auto-rows: 1.5rem;
+                gap: 0 .5rem;
+                border-bottom: 1px solid rgba(0,0,0,.05);
+
+                h1 {
+                    margin: 0;
+                    padding: 0;
+                    font-size: 1.2rem;
+                    grid-column: auto / span 1;
+                    display: flex;
+                    align-items: center;
+                }
+
+                .price {
+                    margin: 0;
+                    padding: 0;
+                    font-size: 1.1rem;
+                    grid-column: auto / span 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                }
+
+                h2 {
+                    margin: 0;
+                    padding: 0;
+                    font-size: .9rem;
+                    font-weight: 600;
+                    grid-column: auto / span 1;
+                    display: flex;
+                    align-items: flex-end;
+                }
+
+                .serial {
+                    margin: 0;
+                    padding: 0;
+                    font-size: .6rem;
+                    font-weight: 400;
+                    color: rgba(0,0,0,.5);
+                    font-style: italic;
+                    grid-column: auto / span 1;
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: flex-end;
+                }
+
+                figure {
+                    margin: 0;
+                    background: $lightGrey;
+                    grid-row: auto / span 2;
+                    grid-column: auto / span 1;
+                    display: flex;
+                    justify-content: center;
+                    align-items: flex-end;
+
+                    img {
+                        width: 80%;
+                    }
+                }
+            }
+
+            .total {
+                display: flex;
+
+                h1 {
+                    flex: 1;
+                    margin: 0;
+
+                    &:last-child {
+                        text-align: right;
+                    }
+
+                }
+
+            }
+
         }
     }
 
