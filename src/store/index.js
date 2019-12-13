@@ -19,6 +19,9 @@ export default new Vuex.Store({
     },
     setActiveProduct(state, product){
       state.overlay.product = product;
+    },
+    addToCart(state, item){
+      state.cart.push(item);
     }
   },
   actions: {
@@ -26,6 +29,16 @@ export default new Vuex.Store({
       console.log(item);
       ctx.commit('toggleOverlay')
       ctx.commit('setActiveProduct', item);
+    }
+  },
+  getters: {
+    total(state){
+      let total = 0;
+      state.cart.forEach(item => {
+        total += item.price;
+      })
+      return { total: total, moms: ( Math.round(total * 0.25)) };
+
     }
   },
   modules: {

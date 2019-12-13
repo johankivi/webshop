@@ -1,6 +1,6 @@
 <template>
 <article class="product">
-    <aside class="buy">
+    <aside class="buy" @click="addToCart(item)">
         <img src="@/assets/icon-bag-black.svg" alt="Buy">
     </aside>
     <aside class="price">
@@ -20,6 +20,9 @@ export default {
     methods: {
         showOverlay(item){
             this.$store.dispatch('showSingleProduct', item);
+        },
+        addToCart(item){
+            this.$store.commit('addToCart', item);
         }
     }
 }
@@ -97,7 +100,7 @@ export default {
         bottom: 1.5rem;
         background: #222;
         color: white;
-        border-radius: 999rem;
+        border-radius: $round;
         font-weight: 800;
         font-size: 1.4rem;
         padding: .5rem 1rem;
@@ -107,7 +110,7 @@ export default {
 
 
     &:hover {
-        transform: scale(1.02);
+        filter: brightness(.96);
     }
 
 }

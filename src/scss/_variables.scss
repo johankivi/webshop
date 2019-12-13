@@ -6,6 +6,8 @@ $middleGrey: rgba(0,0,0,.6);
 $darkGrey: rgba(0,0,0,.8);
 $red: rgb(218, 75, 75);
 
+$round: .25rem;
+
 
 /* COMPONENTS */
 
@@ -14,7 +16,18 @@ $red: rgb(218, 75, 75);
     padding: .75rem 1.5rem;
     font-size: 1rem;
     text-decoration: none;
-    color: white;
-    border-radius: 999rem;
+    color: #eee;
+    border-radius: $round;
     background: $darkGrey;
+    
+    &:hover {
+        color: white;
+        background: black;
+    }
+    
+    &:active {
+        background: $red;
+        color: white;
+    }
+
 }

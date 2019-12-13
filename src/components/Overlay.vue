@@ -12,7 +12,7 @@
         <h2>{{ product.shortDesc}}</h2>
         <p>{{ product.longDesc}}</p>
         <h3 class="price">{{ product.price }} sek</h3>
-        <a href="#" class="btn">Take my money</a>
+        <a href="#" class="btn" @click="addToCart(product)">Take my money</a>
     </section>
 </article>
 
@@ -29,6 +29,9 @@ export default {
     methods: {
         toggleOverlay(){
             this.$store.commit('toggleOverlay');
+        },
+        addToCart(item){
+            this.$store.commit('addToCart', item);
         }
     }
 }
@@ -42,6 +45,8 @@ export default {
     height: 100vh;
     display: flex;
     z-index: 333;
+    padding: 1rem;
+    box-sizing: border-box;
 
     aside.background {
         position: fixed;
@@ -55,7 +60,7 @@ export default {
 
     article.single-product {
         display: flex;
-        max-width: 800px;
+        max-width: 50rem;
         width: 100%;
         margin: auto;
         background: white;
