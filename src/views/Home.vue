@@ -23,6 +23,7 @@ export default {
 
 #home {
   margin-bottom: 3rem;
+  grid-auto-rows: minmax(28rem, auto);
 }
 
 </style>

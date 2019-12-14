@@ -1,9 +1,11 @@
 <template>
     <aside class="cart" @click="showModal = !showModal">
-        <div class="badge" v-if="cart.length > 0">{{ cart.length }}</div>
+        <transition name="fade">
+            <div class="badge" v-if="cart.length > 0">{{ cart.length }}</div>
+        </transition>
         <img src="@/assets/icon-bag-white.svg" alt="cart">
         <section v-if="showModal" class="cart-modal">
-            <article class="cart-item" v-for="item in cart" :key="item.serial">
+            <article class="cart-item" v-for="(item, index) in cart" :key="index">
                 <figure class="thumbnail">
                     <img :src="require(`@/assets/${item.imgFile}`)" :alt="item.title">
                 </figure>
@@ -16,7 +18,7 @@
             <footer class="total">
                 <h1>Total</h1><h1>{{total.total}} kr</h1>
             </footer>
-            <a href="#" class="btn large">Take my Money!</a>
+            <a href="#" class="btn large" @click="$router.push('/pay')">Take my Money!</a>
         </section>
     </aside>
 </template>
@@ -25,7 +27,7 @@ export default {
     name: 'cart',
     data(){
         return {
-            showModal: true
+            showModal: false
         }
     },
     computed: {
@@ -165,6 +167,8 @@ export default {
 
             .total {
                 display: flex;
+                border-top: 2px solid $darkGrey;
+                padding: .25rem 0;
 
                 h1 {
                     flex: 1;

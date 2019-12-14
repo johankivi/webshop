@@ -1,5 +1,5 @@
 <template>
-<article class="product">
+<article class="product col-2">
     <aside class="buy" @click="addToCart(item)">
         <img src="@/assets/icon-bag-black.svg" alt="Buy">
     </aside>
@@ -90,6 +90,13 @@ export default {
 
             img {
                 opacity: 1;
+            }
+        }
+
+        &:active {
+            background: $red;
+            img {
+                filter: invert(1);
             }
         }
     }

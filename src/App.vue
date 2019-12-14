@@ -1,8 +1,12 @@
 <template>
   <div id="app">
-    <Overlay v-if="overlay"/>
+    <transition name="drop">
+      <Overlay v-if="overlay"/>
+    </transition>
     <Topbar />
-    <router-view/>
+    <transition name="fade" mode="out-in">
+      <router-view/>
+    </transition>
   </div>
 </template>
 <script>

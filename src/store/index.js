@@ -6,6 +6,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    auth: {
+      loggedIn: false,
+      role: 'anonymous',
+      user: null
+    },
     items: Items,
     overlay: { 
       active: false,
@@ -29,6 +34,11 @@ export default new Vuex.Store({
       console.log(item);
       ctx.commit('toggleOverlay')
       ctx.commit('setActiveProduct', item);
+    },
+    submitOrder(ctx, order){
+
+      // POST to API
+      console.log(order)
     }
   },
   getters: {
@@ -40,7 +50,5 @@ export default new Vuex.Store({
       return { total: total, moms: ( Math.round(total * 0.25)) };
 
     }
-  },
-  modules: {
   }
 })

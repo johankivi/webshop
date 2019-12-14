@@ -12,6 +12,7 @@
 
 <script>
 import cart from './Cart'
+
 export default {
   name: 'topbar',
   components:  {
@@ -44,15 +45,16 @@ export default {
         margin: 0 1rem;
         padding: .5rem 0 .375rem 0;
         text-decoration: none;
-        border-bottom: .125rem solid rgba(0,0,0,0);
+        border-bottom: .25rem solid rgba(0,0,0,0);
 
         &:hover {
-          border-bottom: .125rem solid $darkGrey;
+          border-bottom: .25rem solid $darkGrey;
+          color: $darkGrey;
         }
 
-        &.router-link-active {
+        &.router-link-exact-active {
           font-weight: 800;
-          border-bottom: .125rem solid $darkGrey;
+          border-bottom: .25rem solid $darkGrey;
           color: $darkGrey; 
         }
 
