@@ -1,11 +1,10 @@
 <template>
     <aside class="cart" @click="showModal = !showModal">
-        <transition name="fade">
-            <div class="badge" v-if="cart.length > 0">{{ cart.length }}</div>
-        </transition>
+        <div class="badge" :class="{ animate: animate }" v-if="cart.length > 0">{{ cart.length }}</div>
         <img src="@/assets/icon-bag-white.svg" alt="cart">
         <section v-if="showModal" class="cart-modal">
-            <article class="cart-item" v-for="(item, index) in cart" :key="index">
+            <p v-if="!cart.length">No items in cart.</p>
+            <article class="cart-item" v-for="(item, index) in cart" :key="index" @click="removeFromCart(index)">
                 <figure class="thumbnail">
                     <img :src="require(`@/assets/${item.imgFile}`)" :alt="item.title">
                 </figure>
@@ -15,10 +14,10 @@
                 <p class="serial">{{item.serial}}</p>
 
             </article>
-            <footer class="total">
+            <footer class="total" v-if="cart.length">
                 <h1>Total</h1><h1>{{total.total}} kr</h1>
             </footer>
-            <a href="#" class="btn large" @click="$router.push('/pay')">Take my Money!</a>
+            <a href="#" v-if="cart.length" class="btn large" @click="$router.push('/pay')">Take my Money!</a>
         </section>
     </aside>
 </template>
@@ -27,7 +26,13 @@ export default {
     name: 'cart',
     data(){
         return {
-            showModal: false
+            showModal: false,
+            animate: false
+        }
+    },
+    methods: {
+        removeFromCart(index){
+            this.$store.commit('removeFromCart', index);
         }
     },
     computed: {
@@ -36,6 +41,15 @@ export default {
         },
         total(){
             return this.$store.getters.total;
+        }
+    },
+    watch: {
+        cart(){
+            console.log('Cart updated.');
+            this.animate = true;
+            setTimeout(() => {
+                this.animate = false;
+            }, 400)
         }
     }
 }
@@ -68,6 +82,15 @@ export default {
             position: absolute;
             transform: translate3d(1rem, -1rem, 0);
             box-shadow: 0 0 1rem rgba(0,0,0,.2);
+
+            &.animate {
+                animation: drop .4s ease forwards;
+
+                @keyframes drop {
+                    from { transform: translate3d(1rem, -1rem, 0) scale(1.5); opacity: 0; }
+                      to { transform: translate3d(1rem, -1rem, 0) scale(1); opacity: 1; }
+                }
+            }
         }
 
         img {
@@ -107,6 +130,12 @@ export default {
                 grid-auto-rows: 1.5rem;
                 gap: 0 .5rem;
                 border-bottom: 1px solid rgba(0,0,0,.05);
+
+                &:hover {
+                    opacity: .8;
+                    cursor: pointer;
+                    background: $lightRed;
+                }
 
                 h1 {
                     margin: 0;
