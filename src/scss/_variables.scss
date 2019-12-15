@@ -86,39 +86,40 @@ form {
                 outline: none;
             }
         }
-
-        &.col-1 {
-            grid-column: auto / span 1;
-        }
-    
-        &.col-2 {
-            grid-column: auto / span 2;
-        }
-    
-        &.col-3 {
-            grid-column: auto / span 3;
-        }
-    
-        &.col-4 {
-            grid-column: auto / span 4;
-        }
-    
-        &.row-1 {
-            grid-row: auto / span 2;
-        }
-    
-        &.row-2 {
-            grid-row: auto / span 4;
-        }
-    
-        &.row-3 {
-            grid-row: auto / span 6;
-        }
-    
-        &.row-4 {
-            grid-row: auto / span 8;
-        }
     }
+
+    .col-1 {
+        grid-column: auto / span 1;
+    }
+
+    .col-2 {
+        grid-column: auto / span 2;
+    }
+
+    .col-3 {
+        grid-column: auto / span 3;
+    }
+
+    .col-4 {
+        grid-column: auto / span 4;
+    }
+
+    .row-1 {
+        grid-row: auto / span 2;
+    }
+
+    .row-2 {
+        grid-row: auto / span 4;
+    }
+
+    .row-3 {
+        grid-row: auto / span 6;
+    }
+
+    .row-4 {
+        grid-row: auto / span 8;
+    }
+
 
     &.light {
         label {

@@ -1,35 +1,11 @@
 <template>
   <main id="admin" class="grid-container">
-      <header class="col-6 form">
-        <form class="light">
-          <label for="image" class="col-1 row-4">
-            Product image
-            <input type="file">
-          </label>
-          <label for="product-name" class="col-2">
-            Product Name
-            <input type="text" v-model="product.title">
-          </label>
-          <label for="" class="col-1">
-            Serial Number
-            <input type="text" v-model="product.serial">
-          </label>
-          <label for="" class="col-1">
-            Price
-            <input type="number" v-model="product.price">
-          </label>
-          <label for="" class="col-2">
-            Short Description
-            <input type="text" v-model="product.shortDesc">
-          </label>
-          <label for="" class="col-3 row-2">
-            Long Description
-            <textarea rows="3" v-model="product.longDesc"></textarea>
-          </label>
-          <footer class="col-4">
-            <a href="" class="btn light">Submit</a>
-          </footer>
-        </form>
+     <transition name="drop">
+        <ProductForm :product="selectedProduct" v-if="showModal" /> 
+    </transition>
+    
+      <header class="col-6">
+          <a href="#" class="btn outline" @click.prevent="addProduct">Add new Item</a>
       </header>
       <article class="product-row col-6" v-for="(product, index) in products" :key="index">
         <figure>
@@ -39,7 +15,7 @@
           <h1>{{product.title }}</h1>
           <h2>{{product.shortDesc}}</h2>
         </section>
-        <aside class="edit" @click="editItem(index)">
+        <aside class="edit" @click="editProduct(index)">
             <a href="#">
               <img src="../assets/icon-edit-white.svg" alt="edit"></a>
         </aside>
@@ -47,23 +23,34 @@
   </main>
 </template>
 <script>
+import ProductForm from '@/components/ProductForm';
+
 export default {
   name: 'Admin',
+  components: {
+    ProductForm
+  },
   data(){
     return {
-      product: {
-        imgFile: '',
-        name: '',
-        serial: '',
+      showModal: false,
+      selectedProduct: Object
+    }
+  },
+  methods: {
+    editProduct(index){
+        this.selectedProduct = this.products[index];
+    },
+    addProduct(){
+        this.selectedProduct = {
+        imgFile: 'skateboard-generic.png',
+        title: '',
+        serial: Date.now(),
         price: Number,
         shortDesc: '',
         longDesc: ''
       }
-    }
-  },
-  methods: {
-    editItem(index){
-        this.product = this.products[index];
+
+      this.showModal = true;
     }
   },
   computed: {
@@ -78,18 +65,24 @@ export default {
 
 #admin {
 
-  .form {
-    background: $darkGrey;
-    padding: 1rem;
+  header {
+    text-align: right;
 
-    label {
-      &[for="image"]{
+    .outline {
+      background: none;
+      border: 1px solid $middleGrey;
+      color: $middleGrey;
 
-        input {
-          height: 86%;
-        }
-
+      &:hover {
+        border: 1px solid $darkGrey;
+        color: $darkGrey;
       }
+
+      &:active {
+        background: $darkGrey;
+        color: #eee;
+      }
+
     }
   }
 
