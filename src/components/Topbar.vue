@@ -4,7 +4,7 @@
     <nav>
       <router-link to="/">Products</router-link>
       <router-link to="/me">My Account</router-link>
-      <router-link to="/admin">Admin Area</router-link>
+      <router-link to="/admin" v-if="auth.role == 'admin'">Admin Area</router-link>
     </nav>
     <cart />
   </header>
@@ -17,6 +17,11 @@ export default {
   name: 'topbar',
   components:  {
     cart
+  },
+  computed: {
+    auth(){
+      return this.$store.state.auth.user;
+    }
   }
 }
 </script>

@@ -66,6 +66,7 @@ export default new Vuex.Store({
 
       let user = {
                   name: 'Johan Kivi',
+                  role: 'admin', // customer
                   email: 'johan.kivi@zocom.se',
                   adress: {
                       street: 'Tokitokvägen 3',

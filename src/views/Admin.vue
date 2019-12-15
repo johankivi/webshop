@@ -61,6 +61,14 @@ export default {
   computed: {
     products(){
       return this.$store.state.items;
+    },
+    auth(){
+      return this.$store.state.auth.user;
+    }
+  },
+  beforeMount(){
+    if(!this.auth.user){
+      this.$router.push('/')
     }
   }
 }
