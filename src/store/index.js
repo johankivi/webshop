@@ -42,6 +42,12 @@ export default new Vuex.Store({
 
       // POST to API
       console.log(order)
+    },
+    addProduct(ctx, newProduct){
+      console.log(newProduct)
+    },
+    editProduct(ctx, updatedProduct){
+      console.log(updatedProduct)
     }
   },
   getters: {

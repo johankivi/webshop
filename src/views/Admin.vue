@@ -3,7 +3,7 @@
      <transition name="drop">
         <ProductForm :product="selectedProduct" v-if="showModal" /> 
     </transition>
-    
+
       <header class="col-6">
           <a href="#" class="btn outline" @click.prevent="addProduct">Add new Item</a>
       </header>
@@ -17,7 +17,8 @@
         </section>
         <aside class="edit" @click="editProduct(index)">
             <a href="#">
-              <img src="../assets/icon-edit-white.svg" alt="edit"></a>
+              <img src="../assets/icon-edit-white.svg" alt="edit">
+            </a>
         </aside>
       </article>
   </main>
@@ -33,12 +34,16 @@ export default {
   data(){
     return {
       showModal: false,
+      edit: false,
       selectedProduct: Object
     }
   },
   methods: {
     editProduct(index){
         this.selectedProduct = this.products[index];
+        this.edit = true;
+        this.showModal = true;
+
     },
     addProduct(){
         this.selectedProduct = {

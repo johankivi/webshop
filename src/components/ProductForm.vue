@@ -2,10 +2,10 @@
     <section id="overlay">
       <aside class="background" @click="toggleOverlay"></aside>
         <form>
-          <h1 class="col-4 row-1">Add / Edit Product</h1>
+          <h1 class="col-4 row-1"><span v-if="$parent.edit">Edit</span><span v-else >Add</span> Product</h1>
           <label for="image" class="col-4">
             Product image URL
-            <input type="text">
+            <input type="text" :value="product.imgFile">
           </label>
           <label for="product-name" class="col-4">
             Product Name
@@ -39,17 +39,30 @@ export default {
     props: ['product'],
     data(){
     return {
+      activeProduct: Object
     }
   },
   methods: {
     submit(){
+        console.log('submit')
 
-        console.log('hello')
+        if(!this.$parent.edit){
+          // New product
+          this.$store.dispatch('addProduct', this.product)
+
+        } else {
+          // Edited Product
+          this.$store.dispatch('editProduct', this.product)
+        }
+
 
         this.toggleOverlay();
     },
     toggleOverlay(){
       this.$parent.showModal = false;
+
+      // reset edit mode
+      this.$parent.edit = false;
     }
   }
 }
