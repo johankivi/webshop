@@ -1,14 +1,169 @@
 <template>
   <main id="admin" class="grid-container">
-      <h1>Admin</h1>
+      <header class="col-6 form">
+        <form class="light">
+          <label for="image" class="col-1 row-4">
+            Product image
+            <input type="file">
+          </label>
+          <label for="product-name" class="col-2">
+            Product Name
+            <input type="text" v-model="product.title">
+          </label>
+          <label for="" class="col-1">
+            Serial Number
+            <input type="text" v-model="product.serial">
+          </label>
+          <label for="" class="col-1">
+            Price
+            <input type="number" v-model="product.price">
+          </label>
+          <label for="" class="col-2">
+            Short Description
+            <input type="text" v-model="product.shortDesc">
+          </label>
+          <label for="" class="col-3 row-2">
+            Long Description
+            <textarea rows="3" v-model="product.longDesc"></textarea>
+          </label>
+          <footer class="col-4">
+            <a href="" class="btn light">Submit</a>
+          </footer>
+        </form>
+      </header>
+      <article class="product-row col-6" v-for="(product, index) in products" :key="index">
+        <figure>
+          <img :src="require(`@/assets/${product.imgFile}`)" :alt="product.title">
+        </figure>
+        <section class="info">
+          <h1>{{product.title }}</h1>
+          <h2>{{product.shortDesc}}</h2>
+        </section>
+        <aside class="edit" @click="editItem(index)">
+            <a href="#">
+              <img src="../assets/icon-edit-white.svg" alt="edit"></a>
+        </aside>
+      </article>
   </main>
 </template>
 <script>
 export default {
-  name: 'Admin'
+  name: 'Admin',
+  data(){
+    return {
+      product: {
+        imgFile: '',
+        name: '',
+        serial: '',
+        price: Number,
+        shortDesc: '',
+        longDesc: ''
+      }
+    }
+  },
+  methods: {
+    editItem(index){
+        this.product = this.products[index];
+    }
+  },
+  computed: {
+    products(){
+      return this.$store.state.items;
+    }
+  }
 }
 </script>
 <style lang="scss">
+@import '../scss/variables';
 
+#admin {
+
+  .form {
+    background: $darkGrey;
+    padding: 1rem;
+
+    label {
+      &[for="image"]{
+
+        input {
+          height: 86%;
+        }
+
+      }
+    }
+  }
+
+  .product-row {
+    display: grid;
+    grid-template-columns: 6rem 1fr 6rem;
+    grid-auto-rows: 2rem;
+    gap: 1rem;
+    padding: 0;
+    background: white;
+    box-shadow: 0 0 2rem rgba(0,0,0,.2);
+
+    figure {
+      grid-row: auto / span 2;
+      margin: 0;
+      padding: 0 1rem;
+      box-sizing: border-box;
+      background: #eee;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+
+      img {
+        margin: -1rem 0 0 0;
+        width: 100%;
+      }
+    }
+
+    h1 {
+      grid-column: auto / span 1;
+      margin: .5rem 0;
+      padding: 0;
+      font-size: 1.4rem;
+    }
+
+    h2 {
+      grid-column: 2 / 1;
+      font-size: 1rem;
+      font-weight: 600;
+      color: $middleGrey;
+      margin: 0;
+    }
+
+    .edit {
+      grid-column: auto / span 1;
+      grid-row: auto / span 2;  
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      a {
+        background: $middleGrey;
+        width: 1.8rem;
+        height: 1.8rem;
+        padding: .25rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 999rem;
+        
+        &:hover {
+          background: $darkGrey;
+        }
+
+        img {
+          width: 50%;
+        }
+      }
+
+    }
+
+  }
+
+
+}
 
 </style>

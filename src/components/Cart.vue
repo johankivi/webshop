@@ -122,6 +122,10 @@ export default {
                 margin-top: -0.625em;
             }
 
+            > p {
+                text-align: center;
+            }
+
             .cart-item {
                 display: grid;
                 margin: 0 0 .5rem 0;

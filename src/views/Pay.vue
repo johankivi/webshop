@@ -18,44 +18,44 @@
                 <h1>Total</h1><h1>{{total.total}} kr</h1>
             </footer>
         </section>
-        <section class="col-3 info">
-            <label for="name" class="col-2">
+        <form class="col-3">
+            <label for="name" class="col-4">
                 Your name
                 <input type="text" name="name" v-model="order.customer.name">
             </label>
-            <label for="street" class="col-2">
+            <label for="street" class="col-4">
                 Street
                 <input type="text" v-model="order.customer.street">
             </label>
-            <label for="zip" class="col-1">
+            <label for="zip" class="col-2">
                 ZIP code
                 <input type="number" v-model="order.customer.zip">
             </label>
-            <label for="city" class="col-1">
+            <label for="city" class="col-2">
                 City
                 <input type="text" v-model="order.customer.cuty">
             </label>
-            <h2 class="col-2">Payment </h2>
-            <label for="cardowner" class="col-2">
+            <h2 class="col-4">Payment </h2>
+            <label for="cardowner" class="col-4">
                 Card Owner
                 <input type="text" v-model="order.payment.cardOwner">
             </label>
-            <label for="cardnumber" class="col-2">
+            <label for="cardnumber" class="col-4">
                 Card Number
                 <input type="numbers" v-model="order.payment.cardNr">
             </label>
-            <label for="cardvalid">
+            <label for="cardvalid" class="col-2">
                 Valid until
                 <input type="text" v-model="order.payment.cardValidUntil">
             </label>
-             <label for="cardcc">
+             <label for="cardcc" class="col-2">
                  CVV
                 <input type="numbers" v-model="order.payment.cardCVV">
             </label>
-            <footer class="col-2">
+            <footer class="col-4">
                 <a href="#" class="btn">Submit Order</a>
             </footer>
-        </section>
+        </form>
     </main>
 </template>
 <script>
@@ -190,52 +190,6 @@ export default {
 
             }
 
-        }
-
-    }
-    
-    .info {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-auto-rows: 1.2rem;
-        gap: 1.5rem 1rem;
-
-        label {
-            font-size: .8rem;
-            color: $middleGrey;
-            line-height: 150%;
-            margin: 0;
-            padding: 0;
-            grid-row: auto / span 2;
-
-            input {
-                border: 1px solid $middleGrey;
-                font-size: 1.2rem;
-                appearance: none;
-                background: none;
-                padding: .5rem;
-                width: 100%;
-                box-sizing: border-box;
-                border-radius: $round;
-
-                &:focus {
-                    color: black;
-                    border-color: black;
-                    outline: none;
-                }
-            }
-        }
-
-        footer {
-            text-align: right;
-        }
-
-        &.col-1 {
-            grid-column: auto / span 1;
-        }
-
-        &.col-2 {
-            grid-column: auto / span 2;
         }
 
     }
