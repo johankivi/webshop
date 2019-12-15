@@ -32,6 +32,10 @@ export default new Vuex.Store({
     },
     setProducts(state, products){
       state.items = products;
+    },
+    auth(state, user){ 
+      state.auth.loggedIn = true;
+      state.auth.user = user;
     }
   },
   actions: {
@@ -57,6 +61,25 @@ export default new Vuex.Store({
     },
     updateProduct(ctx, updatedProduct){
       console.log(updatedProduct)
+    },
+    auth(ctx){
+
+      let user = {
+                  name: 'Johan Kivi',
+                  email: 'johan.kivi@zocom.se',
+                  adress: {
+                      street: 'Tokitokvägen 3',
+                      zip: '123 45',
+                      city: 'Tokberga'
+                  },
+                  payment: {
+                      cardOwner: 'Johan Kivi',
+                      cardNumber: '1234 5678 9101 1121',
+                      validUntil: '10 / 23',
+                      CVV: '123'
+                      }
+                  }
+      ctx.commit('auth', user);
     }
   },
   getters: {

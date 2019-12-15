@@ -23,6 +23,9 @@ export default {
     overlay(){
       return this.$store.state.overlay.active;
     }
+  },
+  beforeMount(){
+    this.$store.dispatch('auth')
   }
 }
 </script>

@@ -8,19 +8,12 @@ export default {
     name: 'Me',
     data(){
         return {
-            name: '',
-            email: '',
-            adress: {
-                street: '',
-                zip: '',
-                city: ''
-            },
-            payment: {
-                cardOwner: '',
-                cardNumber: '',
-                validUntil: '',
-                CVV: ''
-            }        
+
+        }
+    },
+    computed: {
+        me(){
+            return this.$store.state.auth.user;
         }
     }
 }
