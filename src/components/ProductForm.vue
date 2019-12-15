@@ -1,37 +1,37 @@
 <template>
-    <section id="overlay">
-      <aside class="background" @click="toggleOverlay"></aside>
-        <form>
-          <h1 class="col-4 row-1"><span v-if="$parent.edit">Edit</span><span v-else >Add</span> Product</h1>
-          <label for="image" class="col-4">
-            Product image URL
-            <input type="text" :value="product.imgFile">
-          </label>
-          <label for="product-name" class="col-4">
-            Product Name
-            <input type="text" :value="product.title">
-          </label>
-          <label for="" class="col-1">
-            Serial Number
-            <input type="text" :value="product.serial">
-          </label>
-          <label for="" class="col-1">
-            Price
-            <input type="number" :value="product.price">
-          </label>
-          <label for="" class="col-2">
-            Short Description
-            <input type="text" :value="product.shortDesc">
-          </label>
-          <label for="" class="col-4 row-2">
-            Long Description
-            <textarea rows="3" :value="product.longDesc"></textarea>
-          </label>
-          <footer class="col-4">
-            <a href="#" class="btn" @click.prevent="submit">Submit</a>
-          </footer>
-        </form>
-    </section>
+  <section id="overlay">
+    <aside class="background" @click="toggleOverlay"></aside>
+      <form>
+        <h1 class="col-4 row-1"><span v-if="$parent.edit">Edit</span><span v-else >Add</span> Product</h1>
+        <label for="image" class="col-4">
+          Product image URL
+          <input type="text" v-model="activeProduct.imgFile">
+        </label>
+        <label for="product-name" class="col-4">
+          Product Name
+          <input type="text" v-model="activeProduct.title">
+        </label>
+        <label for="" class="col-1">
+          Serial Number
+          <input type="text" v-model="activeProduct.serial">
+        </label>
+        <label for="" class="col-1">
+          Price
+          <input type="number" v-model="activeProduct.price">
+        </label>
+        <label for="" class="col-2">
+          Short Description
+          <input type="text" v-model="activeProduct.shortDesc">
+        </label>
+        <label for="" class="col-4 row-2">
+          Long Description
+          <textarea rows="3" v-model="activeProduct.longDesc"></textarea>
+        </label>
+        <footer class="col-4">
+          <a href="#" class="btn" @click.prevent="submit">Submit</a>
+        </footer>
+      </form>
+  </section>
 </template>
 <script>
 export default {
@@ -48,11 +48,11 @@ export default {
 
         if(!this.$parent.edit){
           // New product
-          this.$store.dispatch('addProduct', this.product)
+          this.$store.dispatch('createProduct', this.product)
 
         } else {
           // Edited Product
-          this.$store.dispatch('editProduct', this.product)
+          this.$store.dispatch('updateProduct', this.product)
         }
 
 
@@ -64,6 +64,9 @@ export default {
       // reset edit mode
       this.$parent.edit = false;
     }
+  },
+  beforeMount(){
+    this.activeProduct = Object.assign(this.product);
   }
 }
 </script>

@@ -16,6 +16,9 @@ export default {
     products(){
       return this.$store.state.items;
     }
+  },
+  beforeMount(){
+    this.$store.dispatch('readProducts');
   }
 }
 </script>

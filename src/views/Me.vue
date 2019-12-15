@@ -5,7 +5,24 @@
 </template>
 <script>
 export default {
-    name: 'Me'
+    name: 'Me',
+    data(){
+        return {
+            name: '',
+            email: '',
+            adress: {
+                street: '',
+                zip: '',
+                city: ''
+            },
+            payment: {
+                cardOwner: '',
+                cardNumber: '',
+                validUntil: '',
+                CVV: ''
+            }        
+        }
+    }
 }
 </script>
 <style lang="scss">

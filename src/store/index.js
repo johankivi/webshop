@@ -8,10 +8,9 @@ export default new Vuex.Store({
   state: {
     auth: {
       loggedIn: false,
-      role: 'anonymous',
       user: null
     },
-    items: Items,
+    items: null,
     overlay: { 
       active: false,
       product: null
@@ -30,6 +29,9 @@ export default new Vuex.Store({
     },
     removeFromCart(state, index){
       state.cart.splice(index,1);
+    },
+    setProducts(state, products){
+      state.items = products;
     }
   },
   actions: {
@@ -43,10 +45,17 @@ export default new Vuex.Store({
       // POST to API
       console.log(order)
     },
-    addProduct(ctx, newProduct){
+    createProduct(ctx, newProduct){
       console.log(newProduct)
     },
-    editProduct(ctx, updatedProduct){
+    readProducts(ctx){
+      
+      // Call API
+      let items = Items;
+      ctx.commit('setProducts', items)
+
+    },
+    updateProduct(ctx, updatedProduct){
       console.log(updatedProduct)
     }
   },

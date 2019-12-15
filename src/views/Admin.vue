@@ -5,7 +5,7 @@
     </transition>
 
       <header class="col-6">
-          <a href="#" class="btn outline" @click.prevent="addProduct">Add new Item</a>
+          <a href="#" class="btn outline" @click.prevent="addProduct">+ Add new Item</a>
       </header>
       <article class="product-row col-6" v-for="(product, index) in products" :key="index">
         <figure>
