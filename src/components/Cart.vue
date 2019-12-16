@@ -45,7 +45,6 @@ export default {
     },
     watch: {
         cart(){
-            console.log('Cart updated.');
             this.animate = true;
             setTimeout(() => {
                 this.animate = false;

@@ -7,9 +7,17 @@
             <h2>Datamodeller</h2>
             <p>De tre objekt som API:et ska kunna hantera är följande:</p>
             <h3>Product</h3>
-            
+            <vue-code-highlight>
+            {{ code.product }}
+            </vue-code-highlight>
             <h3>Order</h3>
-            <h3>User</h3>        
+            <vue-code-highlight>
+            {{ code.order }}
+            </vue-code-highlight>
+            <h3>User</h3> 
+            <vue-code-highlight>
+            {{ code.user }}
+            </vue-code-highlight>
         </article>
         
 
@@ -51,8 +59,52 @@
     </main>
 </template>
 <script>
+import { component as VueCodeHighlight } from 'vue-code-highlight';
+import '../../node_modules/vue-code-highlight/themes/prism-tomorrow.css';
+//import '../../node_modules/vue-code-highlight/themes/window.css';
+
 export default {
-    name: 'Documentation'
+    name: 'Documentation',
+    data(){
+        return {
+            code: {
+                user: `{   
+    name: 'Johan Kivi',
+    role: 'admin', // customer
+    email: 'johan.kivi@zocom.se',
+    adress: {
+        street: 'Tokitokvägen 3',
+        zip: '123 45',
+        city: 'Tokberga'
+    },
+    payment: {
+        cardOwner: 'Johan Kivi',
+        cardNumber: '1234 5678 9101 1121',
+        validUntil: '10 / 23',
+        CVV: '123'
+    },
+    orderHistory: [ { order }, ... ]
+}`,
+                product: `{
+    id: 4,
+    title: 'Gretas Fury',
+    price: 999,
+    shortDesc: 'Unisex',
+    longDesc: 'Skate ipsum dolor sit amet...',
+    imgFile: 'skateboard-greta.png',
+    serial: '127127838128877'
+}`,
+                order: `{
+    orderNr: 123,
+
+
+}`
+            }
+        }
+    },
+    components:{
+        VueCodeHighlight
+    }
 }
 </script>
 <style lang="scss">

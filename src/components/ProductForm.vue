@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     submit(){
-        console.log('submit')
+        console.log('submit');
 
         if(!this.$parent.edit){
           // New product
@@ -54,7 +54,6 @@ export default {
           // Edited Product
           this.$store.dispatch('updateProduct', this.product)
         }
-
 
         this.toggleOverlay();
     },
@@ -78,7 +77,7 @@ export default {
     width: 100vw;
     height: 100vh;
     top: 0;
-        left: 0;
+    left: 0;
     display: flex;
     z-index: 333;
     padding: 1rem;
