@@ -78,8 +78,10 @@ export default new Vuex.Store({
                       cardNumber: '1234 5678 9101 1121',
                       validUntil: '10 / 23',
                       CVV: '123'
-                      }
-                  }
+                  },
+                  orderHistory: []
+                }
+                
       ctx.commit('auth', user);
     }
   },

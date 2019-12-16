@@ -4,12 +4,12 @@
     <nav>
       <router-link to="/">Products</router-link>
       <router-link to="/me">My Account</router-link>
-      <router-link to="/admin" v-if="auth.role == 'admin'">Admin Area</router-link>
+      <router-link to="/documentation">Documentation</router-link>
+      <router-link to="/admin" v-if="auth.user.role == 'admin'">Admin Area</router-link>
     </nav>
     <cart />
   </header>
 </template>
-
 <script>
 import cart from './Cart'
 
@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     auth(){
-      return this.$store.state.auth.user;
+      return this.$store.state.auth;
     }
   }
 }
