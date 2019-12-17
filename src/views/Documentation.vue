@@ -37,7 +37,7 @@
                     <tr>
                         <td>/auth</td>
                         <td><span class="get">POST</span></td>
-                       <td>Authentiserar user med <em>epost</em> & <em>lösenord</em>. Returnerar en <em>token</em> som används vid varje anrop till API.</td>
+                       <td>Authentiserar user med <em>email</em> & <em>password</em>. Returnerar en <em>token</em> som används vid varje anrop till API.</td>
                     </tr>
                 </tbody>
             </table>
