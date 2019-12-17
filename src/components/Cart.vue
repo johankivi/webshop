@@ -8,11 +8,14 @@
                 <figure class="thumbnail">
                     <img :src="require(`@/assets/${item.imgFile}`)" :alt="item.title">
                 </figure>
-                <h1>{{item.title}}</h1>
+                <section class="info">
+                    <h1>{{item.title}}</h1>
+                    <h2>{{item.shortDesc}}</h2>
+                </section>
+                <section class="quantity">
+                   <span>2</span> 
+                </section>
                 <p class="price">{{item.price}} kr</p>
-                <h2>{{item.shortDesc}}</h2>
-                <p class="serial">{{item.serial}}</p>
-
             </article>
             <footer class="total" v-if="cart.length">
                 <h1>Total</h1><h1>{{total.total}} kr</h1>
@@ -83,10 +86,10 @@ export default {
             box-shadow: 0 0 1rem rgba(0,0,0,.2);
 
             &.animate {
-                animation: drop .4s ease forwards;
+                animation: drop .5s ease forwards;
 
                 @keyframes drop {
-                    from { transform: translate3d(1rem, -1rem, 0) scale(1.5); opacity: 0; }
+                    from { transform: translate3d(1rem, -1rem, 0) scale(2); opacity: 0; }
                       to { transform: translate3d(1rem, -1rem, 0) scale(1); opacity: 1; }
                 }
             }
@@ -129,7 +132,7 @@ export default {
                 display: grid;
                 margin: 0 0 .5rem 0;
                 padding-bottom: .5rem; 
-                grid-template-columns: 3rem 1fr 1fr;
+                grid-template-columns: 3rem 1.5fr 1fr 1fr;
                 grid-auto-rows: 1.5rem;
                 gap: 0 .5rem;
                 border-bottom: 1px solid rgba(0,0,0,.05);
@@ -138,6 +141,25 @@ export default {
                     opacity: .8;
                     cursor: pointer;
                     background: $lightRed;
+                }
+
+                .quantity {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    grid-row: auto / span 2;
+
+                    span {
+                        display: flex;
+                        width: 1.8rem;
+                        height: 1.8rem;
+                        background: $darkGrey;
+                        color: #eee;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 999rem;
+                        font-size: .8rem;
+                    }
                 }
 
                 h1 {
