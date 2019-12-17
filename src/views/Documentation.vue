@@ -3,7 +3,7 @@
         <h1 class="col-6">Documentation</h1>
         <article class="col-3">
             <h2>Vad är detta?</h2>
-            <p>SINUS Skate webshop nyttjar ett API med följande funktionalitet.</p>
+            <p>SINUS Skate webshop nyttjar ett API med följande resurser, metoder och modeller.</p>
             <h2>Datamodeller</h2>
             <p>De tre objekt som API:et ska kunna hantera är följande:</p>
             <h3>Product</h3>
@@ -23,6 +23,23 @@
 
         <article class="col-3">
             <h2>API dokumentation</h2>
+            <h3>Authentication</h3>
+            <table cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Resurs</th>
+                        <th>Metod</th>
+                        <th>Detaljer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>/auth</td>
+                        <td><span class="get">POST</span></td>
+                       <td>Authentiserar user med <em>epost</em> & <em>lösenord</em>. Returnerar en nyckel som används vid varje anrop till API.</td>
+                    </tr>
+                </tbody>
+            </table>
             <h3>Products</h3>
             <table cellspacing="0">
                 <thead>
@@ -56,7 +73,69 @@
                 </tbody>
             </table>
             <h3>Orders</h3>
+            <table cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Resurs</th>
+                        <th>Metod</th>
+                        <th>Detaljer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="endpoint">/orders</td>
+                        <td><span class="get">GET</span></td>
+                       <td>Returnerar en lista på samtliga ordrar.</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><span class="get">POST</span></td>
+                       <td>Skapar en ny order, se order-modell.</td>
+                    </tr>
+                    <tr>
+                    <td>/orders/:orderNr</td>
+                        <td><span class="get">PUT</span></td>
+                       <td>Uppdaterar order, se order-modell.</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><span class="get">DELETE</span></td>
+                        <td>Tar bort en order med :orderNr.</td>
+                    </tr>
+                </tbody>
+            </table>
             <h3>Users</h3>
+            <table cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Resurs</th>
+                        <th>Metod</th>
+                        <th>Detaljer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="endpoint">/users</td>
+                        <td><span class="get">GET</span></td>
+                       <td>Returnerar en lista på samtliga användare. Endast tillgänglig för admins.</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><span class="get">POST</span></td>
+                       <td>Skapar en ny användare, se user-modell. Default-roll är <em>customer</em>.</td>
+                    </tr>
+                    <tr>
+                    <td>/products/:uuid</td>
+                        <td><span class="get">PUT</span></td>
+                       <td>Uppdaterar user, se user-modell. Endast tillgänglig för specifik user samt admin.</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><span class="get">DELETE</span></td>
+                        <td>Tar bort en användare med :uuid. Endast admin har rättighet.</td>
+                    </tr>
+                </tbody>
+            </table>
         </article>
     </main>
 </template>
@@ -72,9 +151,11 @@ export default {
             code: {
                 user: `{
     uuid: '6b521d3f-3d15...'   
+    email: 'johan.kivi@zocom.se',
+    password: [encrypted string],
     name: 'Johan Kivi',
     role: 'admin', // customer
-    email: 'johan.kivi@zocom.se',
+
     adress: {
         street: 'Tokitokvägen 3',
         zip: '123 45',

@@ -65,9 +65,11 @@ export default new Vuex.Store({
     auth(ctx){
 
       let user = {
+                  uuid: 'af1b238f-3dc7-4daf-bbf7-06b913e0a273',
                   name: 'Johan Kivi',
                   role: 'admin', // customer
                   email: 'johan.kivi@zocom.se',
+                  password: 'abc123',
                   adress: {
                       street: 'Tokitokvägen 3',
                       zip: '123 45',
@@ -81,7 +83,7 @@ export default new Vuex.Store({
                   },
                   orderHistory: []
                 }
-                
+
       ctx.commit('auth', user);
     }
   },
