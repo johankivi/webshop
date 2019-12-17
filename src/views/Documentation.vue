@@ -23,6 +23,7 @@
 
         <article class="col-3">
             <h2>API dokumentation</h2>
+            <h3>Products</h3>
             <table cellspacing="0">
                 <thead>
                     <tr>
@@ -54,7 +55,8 @@
                     </tr>
                 </tbody>
             </table>
-
+            <h3>Orders</h3>
+            <h3>Users</h3>
         </article>
     </main>
 </template>
@@ -68,7 +70,8 @@ export default {
     data(){
         return {
             code: {
-                user: `{   
+                user: `{
+    uuid: '6b521d3f-3d15...'   
     name: 'Johan Kivi',
     role: 'admin', // customer
     email: 'johan.kivi@zocom.se',
@@ -81,7 +84,7 @@ export default {
         cardOwner: 'Johan Kivi',
         cardNumber: '1234 5678 9101 1121',
         validUntil: '10 / 23',
-        CVV: '123'
+        cvv: '123'
     },
     orderHistory: [ { order }, ... ]
 }`,
@@ -96,8 +99,10 @@ export default {
 }`,
                 order: `{
     orderNr: 123,
-
-
+    timeStamp: Object
+    status: 'inProcess', // done
+    items: [ { quantity, product }],
+    orderValue: 999
 }`
             }
         }
