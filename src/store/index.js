@@ -52,16 +52,19 @@ export default new Vuex.Store({
       ctx.commit('setActiveProduct', item);
     },
     async submitOrder(ctx, order){
-
-      try {
-
-        let resp = await axios.post(`${API_URL}/orders`, order);
-        console.log(resp);
-
-      } catch(err) {
-        console.error(err);
-      }
-
+      order.items = order.items.map(item => item._id)
+      
+      let response = await fetch('/api/orders', {
+        method:'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(order)}
+      )
+      let body = await response.json()
+      console.log(body)
+      
     },
     async createProduct(ctx, newProduct){
 
@@ -76,9 +79,8 @@ export default new Vuex.Store({
 
     },
     async readProducts(ctx){
-      
-      // Call API
-      let items = await Items;
+      let response = await fetch('/api/products')
+      let items = await response.json()
       ctx.commit('setProducts', items)
 
     },
