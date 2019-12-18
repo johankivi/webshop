@@ -8,16 +8,19 @@
       <router-link to="/documentation">Documentation</router-link>
       <router-link to="/admin" v-if="auth.user.role == 'admin'">Admin Area</router-link>
     </nav>
+    <login />
     <cart />
   </header>
 </template>
 <script>
-import cart from './Cart'
+import cart from './Cart';
+import login from './Login';
 
 export default {
   name: 'topbar',
   components:  {
-    cart
+    cart,
+    login
   },
   computed: {
     auth(){

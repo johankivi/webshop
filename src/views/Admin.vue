@@ -66,10 +66,8 @@ export default {
       return this.$store.state.auth.user;
     }
   },
-  beforeMount(){
-    if(!this.auth.user){
-      this.$router.push('/')
-    }
+  mounted(){
+    
   }
 }
 </script>

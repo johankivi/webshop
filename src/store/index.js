@@ -34,7 +34,7 @@ export default new Vuex.Store({
       state.items = products;
     },
     auth(state, user){ 
-      state.auth.loggedIn = true;
+      //state.auth.loggedIn = true;
       state.auth.user = user;
     }
   },
@@ -67,8 +67,10 @@ export default new Vuex.Store({
       console.log(newUser);
     
     },
-    auth(ctx){
+    auth(ctx, credentials){
 
+      console.log(credentials);
+      
       let user = {
                   uuid: 'af1b238f-3dc7-4daf-bbf7-06b913e0a273',
                   name: 'Johan Kivi',

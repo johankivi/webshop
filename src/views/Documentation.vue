@@ -126,7 +126,7 @@
                        <td>Skapar en ny användare, se user-modell. Default-roll är <em>customer</em>.</td>
                     </tr>
                     <tr>
-                    <td>/products/:uuid</td>
+                    <td>/user/:uuid</td>
                         <td><span class="get">PATCH</span></td>
                        <td>Uppdaterar user, se user-modell. Endast tillgänglig för specifik user samt admin.</td>
                     </tr>
@@ -151,7 +151,7 @@ export default {
         return {
             code: {
                 user: `{
-    uuid: '6b521d3f-3d15...'   
+    uuid: '6b521d3f-3d15...' // add server side
     email: 'johan.kivi@zocom.se',
     password: [encrypted string],
     name: 'Johan Kivi',
@@ -181,9 +181,9 @@ export default {
 }`,
                 order: `{
     orderNr: 123,
-    timeStamp: Object
+    timeStamp: Date.now(), // add server side
     status: 'inProcess', // done
-    items: [ { quantity, product }],
+    items: [ product ],
     orderValue: 999
 }`
             }
