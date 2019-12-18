@@ -12,13 +12,10 @@
                     <h1>{{item.title}}</h1>
                     <h2>{{item.shortDesc}}</h2>
                 </section>
-                <section class="quantity">
-                   <span>2</span> 
-                </section>
                 <p class="price">{{item.price}} kr</p>
             </article>
             <footer class="total" v-if="cart.length">
-                <h1>Total</h1><h1>{{total.total}} kr</h1>
+                <h1>Total</h1><h1>{{ total.total }} kr</h1>
             </footer>
             <a href="#" v-if="cart.length" class="btn large" @click="$router.push('/pay')">Take my Money!</a>
         </section>
@@ -49,6 +46,7 @@ export default {
     watch: {
         cart(){
             this.animate = true;
+
             setTimeout(() => {
                 this.animate = false;
             }, 400)
@@ -132,7 +130,7 @@ export default {
                 display: grid;
                 margin: 0 0 .5rem 0;
                 padding-bottom: .5rem; 
-                grid-template-columns: 3rem 1.5fr 1fr 1fr;
+                grid-template-columns: 3rem 1.5fr 1fr;
                 grid-auto-rows: 1.5rem;
                 gap: 0 .5rem;
                 border-bottom: 1px solid rgba(0,0,0,.05);

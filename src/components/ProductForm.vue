@@ -44,7 +44,6 @@ export default {
   },
   methods: {
     submit(){
-        console.log('submit');
 
         if(!this.$parent.edit){
           // New product

@@ -6,6 +6,7 @@
     grid-template-columns: repeat(6, 1fr);
     gap: 1rem;
 
+
     &.wide {
         gap: 1rem 2rem;
     }
@@ -33,4 +34,7 @@
     .col-6 {
         grid-column: auto / span 6;
     }
+    
+    
+
 }

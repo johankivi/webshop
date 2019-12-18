@@ -63,7 +63,7 @@
                     </tr>
                     <tr>
                     <td>/products/:id</td>
-                        <td><span class="get">PUT</span></td>
+                        <td><span class="get">PATCH</span></td>
                        <td>Uppdaterar produkt, se produkt-modell.</td>
                     </tr>
                     <tr>
@@ -95,7 +95,7 @@
                     </tr>
                     <tr>
                     <td>/orders/:orderNr</td>
-                        <td><span class="get">PUT</span></td>
+                        <td><span class="get">PATCH</span></td>
                        <td>Uppdaterar order, se order-modell.</td>
                     </tr>
                     <tr>
@@ -127,7 +127,7 @@
                     </tr>
                     <tr>
                     <td>/products/:uuid</td>
-                        <td><span class="get">PUT</span></td>
+                        <td><span class="get">PATCH</span></td>
                        <td>Uppdaterar user, se user-modell. Endast tillgänglig för specifik user samt admin.</td>
                     </tr>
                     <tr>

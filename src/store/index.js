@@ -40,7 +40,6 @@ export default new Vuex.Store({
   },
   actions: {
     showSingleProduct(ctx, item){
-      console.log(item);
       ctx.commit('toggleOverlay')
       ctx.commit('setActiveProduct', item);
     },
@@ -48,6 +47,7 @@ export default new Vuex.Store({
 
       // POST to API
       console.log(order)
+
     },
     createProduct(ctx, newProduct){
       console.log(newProduct)
@@ -61,6 +61,11 @@ export default new Vuex.Store({
     },
     updateProduct(ctx, updatedProduct){
       console.log(updatedProduct)
+    },
+    register(ctx, newUser){
+
+      console.log(newUser);
+    
     },
     auth(ctx){
 
