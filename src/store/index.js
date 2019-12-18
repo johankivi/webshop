@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Items from './storedata';
+import axios from 'axios';
 
 Vue.use(Vuex)
+
+const API_URL = 'http://localhost:3000';
 
 export default new Vuex.Store({
   state: {
@@ -34,8 +37,13 @@ export default new Vuex.Store({
       state.items = products;
     },
     auth(state, user){ 
-      //state.auth.loggedIn = true;
       state.auth.user = user;
+    },
+    login(state){
+      state.auth.loggedIn = true;
+    },
+    logout(state){
+      state.auth.loggedIn = false;
     }
   },
   actions: {
@@ -43,36 +51,64 @@ export default new Vuex.Store({
       ctx.commit('toggleOverlay')
       ctx.commit('setActiveProduct', item);
     },
-    submitOrder(ctx, order){
+    async submitOrder(ctx, order){
 
-      // POST to API
-      console.log(order)
+      try {
+
+        let resp = await axios.post(`${API_URL}/orders`, order);
+        console.log(resp);
+
+      } catch(err) {
+        console.error(err);
+      }
 
     },
-    createProduct(ctx, newProduct){
-      console.log(newProduct)
+    async createProduct(ctx, newProduct){
+
+      try {
+        let resp = await axios.post(`${API_URL}/products`, newProduct);
+        // Handle resp
+        console.log(resp);
+      } catch(err) {
+        // Handle err
+        console.error(err);
+      }
+
     },
-    readProducts(ctx){
+    async readProducts(ctx){
       
       // Call API
-      let items = Items;
+      let items = await Items;
       ctx.commit('setProducts', items)
 
     },
-    updateProduct(ctx, updatedProduct){
-      console.log(updatedProduct)
+    async updateProduct(ctx, updatedProduct){
+      try {
+        let resp = await axios.patch(`${API_URL}/products/${updatedProduct._id}`, updatedProduct);
+        // Handle resp
+        console.log(resp);
+      } catch(err) {
+        // Handle err
+        console.error(err);
+      }
     },
-    register(ctx, newUser){
-
-      console.log(newUser);
+    async register(ctx, newUser){
+      try {
+        let resp = await axios.post(`${API_URL}/users`, newUser);
+        // Handle resp
+        console.log(resp);
+      } catch(err) {
+        // Handle err
+        console.error(err);
+      }
     
     },
-    auth(ctx, credentials){
+    async auth(ctx, credentials){
 
       console.log(credentials);
       
       let user = {
-                  uuid: 'af1b238f-3dc7-4daf-bbf7-06b913e0a273',
+                  _id: 'af1b238f-3dc7-4daf-bbf7-06b913e0a273',
                   name: 'Johan Kivi',
                   role: 'admin', // customer
                   email: 'johan.kivi@zocom.se',
@@ -90,7 +126,7 @@ export default new Vuex.Store({
                   },
                   orderHistory: []
                 }
-
+      
       ctx.commit('auth', user);
     }
   },
@@ -100,7 +136,7 @@ export default new Vuex.Store({
       state.cart.forEach(item => {
         total += item.price;
       })
-      return { total: total, moms: ( Math.round(total * 0.25)) };
+      return total;
 
     }
   }

@@ -1,7 +1,18 @@
 <template>
-    <aside class="login" >
+    <aside class="login">
         <img src="@/assets/icon-user-black.svg" alt="login" @click="showModal = !showModal">
-        <section v-if="showModal" class="login-modal">
+        <section v-if="showModal && !auth.loggedIn" class="login-modal">
+            <label for="">
+            Email
+                <input type="email" v-model="credentials.email" @keyup.enter="login">
+            </label>
+            <label for="">
+            Password
+                <input type="password" v-model="credentials.password">
+            </label> 
+            <a href="#" class="btn large" @click="login">Login</a>
+        </section>
+        <section v-if="showModal && auth.loggedIn" class="login-modal">
             <label for="">
             Email
                 <input type="email" v-model="credentials.email" @keyup.enter="login">
@@ -24,6 +35,11 @@ export default {
                 email: '',
                 password: ''
             }
+        }
+    },
+    computed: {
+        auth(){
+            return this.$store.state.auth;
         }
     },
     methods: {
@@ -54,9 +70,11 @@ export default {
         }
 
         img {
-            width: 80%;
+            width: 70%;
             opacity: .6;
             transform: translateY(-1px);
+
+           
         }
 
         .login-modal {
