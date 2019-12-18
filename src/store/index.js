@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Items from './storedata';
+// import Items from './storedata';
 
 Vue.use(Vuex)
 
@@ -43,19 +43,27 @@ export default new Vuex.Store({
       ctx.commit('toggleOverlay')
       ctx.commit('setActiveProduct', item);
     },
-    submitOrder(ctx, order){
-
-      // POST to API
-      console.log(order)
-
+    async submitOrder(ctx, order){
+      order.items = order.items.map(item => item._id)
+      
+      let response = await fetch('/api/orders', {
+        method:'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(order)}
+      )
+      let body = await response.json()
+      console.log(body)
+      
     },
     createProduct(ctx, newProduct){
       console.log(newProduct)
     },
-    readProducts(ctx){
-      
-      // Call API
-      let items = Items;
+    async readProducts(ctx){
+      let response = await fetch('/api/products')
+      let items = await response.json()
       ctx.commit('setProducts', items)
 
     },
