@@ -53,7 +53,7 @@
                 <input type="numbers" v-model="order.payment.cardCVV">
             </label>
             <footer class="col-4">
-                <a href="#" class="btn">Submit Order</a>
+                <a href="#" class="btn" @click="submitOrder">Submit Order</a>
             </footer>
         </form>
     </main>
@@ -76,13 +76,14 @@ export default {
                     cardValidUntil: '',
                     cardCVV: ''
                 },
-                order: this.cart,
+                items: this.cart,
             }
         }
     },
     methods: {
         submitOrder(){
-            this.$store.commit('submitOrder', this.order)
+            this.order.items = this.cart
+            this.$store.dispatch('submitOrder', this.order)
         }
     },
     computed: {
