@@ -3,7 +3,8 @@
       <img src="@/assets/sinus-logo.svg" alt="logo">
     <nav>
       <router-link to="/">Products</router-link>
-      <router-link to="/me">My Account</router-link>
+      <router-link v-if="auth.loggedIn" to="/me">My Account</router-link>
+      <router-link v-if="!auth.loggedIn" to="/register">Register</router-link>
       <router-link to="/documentation">Documentation</router-link>
       <router-link to="/admin" v-if="auth.user.role == 'admin'">Admin Area</router-link>
     </nav>
