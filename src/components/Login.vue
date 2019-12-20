@@ -1,6 +1,8 @@
 <template>
-    <aside class="login">
-        <img src="@/assets/icon-user-black.svg" alt="login" @click="showModal = !showModal">
+    <aside class="login" v-click-outside="close">
+        <div class="icon" @click="showModal = !showModal">
+            <img src="@/assets/icon-user-black.svg" alt="login" >
+        </div>
         <form v-if="showModal && !auth.loggedIn" class="login-modal">
             <label for="">
             Email
@@ -26,6 +28,8 @@
     </aside>
 </template>
 <script>
+import ClickOutside from 'vue-click-outside'
+
 export default {
     name: 'Login',
     data(){
@@ -46,8 +50,12 @@ export default {
         login(){
             this.$store.dispatch('auth', this.credentials);
             this.showModal = false;
+        },
+        close(){
+            this.showModal = false
         }
-    }
+    },
+    directives:{ClickOutside}
 }
 </script>
 <style lang="scss">
@@ -65,16 +73,20 @@ export default {
         border-radius: 999rem;
         position: relative;
 
-        &:hover {
-            cursor: pointer;
-        }
 
-        img {
-            width: 70%;
-            opacity: .6;
-            transform: translateY(-1px);
+        .icon{
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-           
+            &:hover {
+                cursor: pointer;
+            }
+            img {
+                width: 70%;
+                opacity: .6;
+                transform: translateY(-1px);
+            }
         }
 
         .login-modal {

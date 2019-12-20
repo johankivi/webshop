@@ -1,5 +1,5 @@
 <template>
-    <aside class="cart" @click="showModal = !showModal">
+    <aside class="cart" @click="showModal = !showModal" v-click-outside="close">
         <div class="badge" :class="{ animate: animate }" v-if="cart.length > 0">{{ cart.length }}</div>
         <img src="@/assets/icon-bag-white.svg" alt="cart">
         <section v-if="showModal" class="cart-modal">
@@ -22,6 +22,8 @@
     </aside>
 </template>
 <script>
+import ClickOutside from 'vue-click-outside';
+
 export default {
     name: 'cart',
     data(){
@@ -33,6 +35,9 @@ export default {
     methods: {
         removeFromCart(index){
             this.$store.commit('removeFromCart', index);
+        },
+        close(){
+            this.showModal = false
         }
     },
     computed: {
@@ -51,7 +56,8 @@ export default {
                 this.animate = false;
             }, 400)
         }
-    }
+    },
+    directives:{ClickOutside}
 }
 </script>
 <style lang="scss">
