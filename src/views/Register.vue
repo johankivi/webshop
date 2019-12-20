@@ -7,38 +7,42 @@
             <h1>Cowabunga</h1>
             <p class="ingress">Skate ipsum dolor sit amet, rip grip hip grab 540 pivot nose Tracker. Gnar bucket Skateboard Shuffle casper slide 180 boneless layback hardware nosebone.</p>
 
-<p>Vans Calfornia Daze rock and roll chicken wing pogo transfer. Powerslide pivot slam Sidewalk Surfer durometer. Deck full-cab gap Old Ghosts ho-ho. Invert melancholy feeble rocket air. Hanger rock and roll g-turn ledge. 50-50 Kevin Harris boardslide street Mark Gonzales. Air pool hang-up fakie out Randy Ruiz. Steps nose bump powerslide axle set. Future Primitive Japan air snake steps camel back. Face plant crailtap rail slide half-cab. Rail regular footed flypaper drop in. Casper slide speed wobbles indy grab ollie hole. </p>
+            <p>Vans Calfornia Daze rock and roll chicken wing pogo transfer. Powerslide pivot slam Sidewalk Surfer durometer. Deck full-cab gap Old Ghosts ho-ho. Invert melancholy feeble rocket air. Hanger rock and roll g-turn ledge. 50-50 Kevin Harris boardslide street Mark Gonzales. Air pool hang-up fakie out Randy Ruiz. Steps nose bump powerslide axle set. Future Primitive Japan air snake steps camel back. Face plant crailtap rail slide half-cab. Rail regular footed flypaper drop in. Casper slide speed wobbles indy grab ollie hole. </p>
         </section>
         <section class="col-3">
          <h1>Register</h1>
         <form>
             <label class="col-4">
                 Name
-                <input type="text" v-model="user.name">
+                <input type="text" v-model="user.name" />
             </label>
             <label class="col-4">
                 Email
-                <input type="email" v-model="user.email">
+                <input type="email" v-model="user.email" />
             </label>
             <label class="col-4">
                 Password
-                <input type="password" v-model="user.password">
+                <input type="password" v-model="user.password" />
+            </label>
+            <label class="col-4">
+                Repeat Password
+                <input type="password" v-model="user.repeatPassword" />
             </label>
             <h2>Adress</h2>
             <label class="col-4">
                 Street
-                <input type="text" v-model="user.adress.street">
+                <input type="text" v-model="user.adress.street" />
             </label>
                     <label class="col-2">
                 Zip Code
-                <input type="text" v-model="user.adress.zip">
+                <input type="text" v-model="user.adress.zip" />
             </label>
                     <label class="col-2">
                 City
-                <input type="text" v-model="user.adress.city">
+                <input type="text" v-model="user.adress.city" />
             </label>
             <footer class="col-4">
-                <a href="#" class="btn">Sign me up!</a>
+                <a href="#" class="btn" @click="register">Sign me up!</a>
             </footer>
          </form>
          </section>
@@ -52,6 +56,7 @@ export default {
             user: {
                 email: '',
                 password: '',
+                repeatPassword: '',
                 name: '',
                 adress: {
                     street: '',
@@ -63,7 +68,8 @@ export default {
     },
     methods: {
         register(){
-            this.$store.dispatch('register', this.user);
+            this.$store.dispatch('register', this.user)
+            .then(() => this.$router.push("/"))
         }
     }
 }

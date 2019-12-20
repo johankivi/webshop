@@ -15,15 +15,8 @@
             <a href="#" class="btn large" @click="login">Login</a>
         </form>
         <section v-if="showModal && auth.loggedIn" class="login-modal">
-            <label for="">
-            Email
-                <input type="email" v-model="credentials.email" @keyup.enter="login">
-            </label>
-            <label for="">
-            Password
-                <input type="password" v-model="credentials.password">
-            </label> 
-            <a href="#" class="btn large" @click="login">Login</a>
+            <p> {{auth.user.name}} </p>
+            <a href="#" class="btn large" @click="logout">Logout</a>
         </section>
     </aside>
 </template>
@@ -50,6 +43,9 @@ export default {
         login(){
             this.$store.dispatch('auth', this.credentials);
             this.showModal = false;
+        },
+        logout(){
+            this.$store.dispatch('logout')            
         },
         close(){
             this.showModal = false

@@ -59,6 +59,8 @@ export default new Vuex.Store({
     },
     logout(state){
       state.auth.loggedIn = false;
+      state.auth.error = false
+      delete api.defaults.headers.common['Authorization']
     }
   },
   actions: {
@@ -109,19 +111,13 @@ export default new Vuex.Store({
         console.error(err);
       }
     },
-    async register(ctx, newUser){
+    async register({commit}, newUser){
       try {
-        let resp = await fetch('/users', {
-          method:'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            // Add Authorization Header here
-          },
-          body: JSON.stringify(newUser)
-        });
-        // Handle resp
-        console.log(resp);
+        let resp = await api.post('/register', newUser);
+        if(resp.status == 200){
+          commit('auth', resp.data)
+          commit('login')
+        }
       } catch(err) {
         // Handle err
         console.error(err);
@@ -150,6 +146,10 @@ export default new Vuex.Store({
       .catch(error => {
         commit('failLogin')
       })
+    },
+
+    async logout({commit}){
+      commit('logout')
     },
 
     async readOrders({commit}){
