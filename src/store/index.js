@@ -1,23 +1,28 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import Items from './storedata';
+import Vue from 'vue';
+import Vuex from 'vuex';
 import axios from 'axios';
+// import Items from './storedata';
 
 Vue.use(Vuex)
 
-const API_URL = 'http://localhost:3000';
+const api = axios.create({baseURL:'/api'})
 
 export default new Vuex.Store({
   state: {
     auth: {
       loggedIn: false,
-      user: null
+      error: false,
+      token: null,
+      user: {
+        role: 'anonymous'
+      }
     },
     items: null,
     overlay: { 
       active: false,
       product: null
     },
+    orderHistory: [],
     cart: []
   },
   mutations: {
@@ -36,11 +41,21 @@ export default new Vuex.Store({
     setProducts(state, products){
       state.items = products;
     },
-    auth(state, user){ 
-      state.auth.user = user;
+    setOrderHistory(state, orders){
+      state.orderHistory = orders
+    },
+    auth(state, body){ 
+      state.auth.user = body.user;
+      api.defaults.headers.common['Authorization'] = `Bearer ${body.token}`
     },
     login(state){
       state.auth.loggedIn = true;
+      state.auth.error = false
+    },
+    failLogin(state){
+      state.auth.login = false
+      state.auth.error = true
+      delete api.defaults.headers.common['Authorization']
     },
     logout(state){
       state.auth.loggedIn = false;
@@ -54,22 +69,22 @@ export default new Vuex.Store({
     async submitOrder(ctx, order){
       order.items = order.items.map(item => item._id)
       
-      let response = await fetch('/api/orders', {
-        method:'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body:JSON.stringify(order)}
-      )
-      let body = await response.json()
-      console.log(body)
+      let response = await api.post('/orders', order)
+  
+      console.log(response)
       
     },
     async createProduct(ctx, newProduct){
-
       try {
-        let resp = await axios.post(`${API_URL}/products`, newProduct);
+        let resp = await fetch('/api/products', {
+          method:'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${ctx.state.auth.token}`            
+          },
+          body: JSON.stringify(newProduct)
+        });
         // Handle resp
         console.log(resp);
       } catch(err) {
@@ -86,7 +101,7 @@ export default new Vuex.Store({
     },
     async updateProduct(ctx, updatedProduct){
       try {
-        let resp = await axios.patch(`${API_URL}/products/${updatedProduct._id}`, updatedProduct);
+        let resp = await api.patch(`/products/${updatedProduct._id}`, updatedProduct);
         // Handle resp
         console.log(resp);
       } catch(err) {
@@ -96,7 +111,15 @@ export default new Vuex.Store({
     },
     async register(ctx, newUser){
       try {
-        let resp = await axios.post(`${API_URL}/users`, newUser);
+        let resp = await fetch('/users', {
+          method:'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            // Add Authorization Header here
+          },
+          body: JSON.stringify(newUser)
+        });
         // Handle resp
         console.log(resp);
       } catch(err) {
@@ -105,31 +128,33 @@ export default new Vuex.Store({
       }
     
     },
-    async auth(ctx, credentials){
+    async auth({commit}, credentials){
 
-      console.log(credentials);
-      
-      let user = {
-                  _id: 'af1b238f-3dc7-4daf-bbf7-06b913e0a273',
-                  name: 'Johan Kivi',
-                  role: 'admin', // customer
-                  email: 'johan.kivi@zocom.se',
-                  password: 'abc123',
-                  adress: {
-                      street: 'Tokitokvägen 3',
-                      zip: '123 45',
-                      city: 'Tokberga'
-                  },
-                  payment: {
-                      cardOwner: 'Johan Kivi',
-                      cardNumber: '1234 5678 9101 1121',
-                      validUntil: '10 / 23',
-                      CVV: '123'
-                  },
-                  orderHistory: []
-                }
-      
-      ctx.commit('auth', user);
+      fetch('/api/auth', {
+        method:'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+      })
+      .then(async response => {
+        let body = await response.json()
+        if(response.status == 200){
+          commit('auth', body )
+          commit('login')
+        }else{
+          throw new Error()
+        }
+      })
+      .catch(error => {
+        commit('failLogin')
+      })
+    },
+
+    async readOrders({commit}){
+      const response = await api.get('/orders')
+      commit('setOrderHistory', response.data)
     }
   },
   getters: {

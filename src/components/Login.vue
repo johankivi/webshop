@@ -1,17 +1,17 @@
 <template>
     <aside class="login">
         <img src="@/assets/icon-user-black.svg" alt="login" @click="showModal = !showModal">
-        <section v-if="showModal && !auth.loggedIn" class="login-modal">
+        <form v-if="showModal && !auth.loggedIn" class="login-modal">
             <label for="">
             Email
-                <input type="email" v-model="credentials.email" @keyup.enter="login">
+                <input type="email" v-model="credentials.email" @keyup.enter="login" autocomplete="off">
             </label>
             <label for="">
             Password
-                <input type="password" v-model="credentials.password">
+                <input type="password" v-model="credentials.password" autocomplete="off">
             </label> 
             <a href="#" class="btn large" @click="login">Login</a>
-        </section>
+        </form>
         <section v-if="showModal && auth.loggedIn" class="login-modal">
             <label for="">
             Email
@@ -32,8 +32,8 @@ export default {
         return {
             showModal: false,
             credentials: {
-                email: '',
-                password: ''
+                email: 'customer@example.com',
+                password: 'omg'
             }
         }
     },
@@ -85,6 +85,7 @@ export default {
             top: 3.25rem;
             z-index: 222;
             box-shadow: 0 0 3rem rgba(0,0,0,.2);
+            display: block;
 
             &:after {
                 content: '';

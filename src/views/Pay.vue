@@ -29,11 +29,11 @@
             </label>
             <label for="zip" class="col-2">
                 ZIP code
-                <input type="number" v-model="order.customer.zip">
+                <input type="text" v-model="order.customer.zip">
             </label>
             <label for="city" class="col-2">
                 City
-                <input type="text" v-model="order.customer.cuty">
+                <input type="text" v-model="order.customer.city">
             </label>
             <h2 class="col-4">Payment </h2>
             <label for="cardowner" class="col-4">
@@ -86,12 +86,26 @@ export default {
             this.$store.dispatch('submitOrder', this.order)
         }
     },
+
     computed: {
         cart(){
             return this.$store.state.cart;
         },
         total(){
             return this.$store.getters.total;
+        },
+        user(){
+            return this.$store.state.auth.user
+        }
+    },
+
+    mounted(){
+        console.log(this.user)
+        if(this.user.role != 'anonymous'){
+            this.order.customer.name = this.user.name
+            this.order.customer.street = this.user.adress.street
+            this.order.customer.zip = this.user.adress.zip
+            this.order.customer.city = this.user.adress.city
         }
     }
 }
