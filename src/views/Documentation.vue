@@ -4,7 +4,6 @@
         <article class="col-3">
             <h2>Vad är detta?</h2>
             <p>SINUS Skate webshop nyttjar ett API med följande resurser, metoder och datamodeller.</p>
-            <p><b>Ditt API ska servas på port 3000.</b></p>
             <h2>Datamodeller</h2>
             <p>De tre objekt som API:et ska kunna hantera är följande:</p>
             <h3>Product</h3>

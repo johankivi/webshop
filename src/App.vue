@@ -25,7 +25,7 @@ export default {
     }
   },
   beforeMount(){
-    // this.$store.dispatch('auth')
+    this.$store.dispatch('checkAuth')
   }
 }
 </script>

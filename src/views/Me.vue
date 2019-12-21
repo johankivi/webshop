@@ -1,8 +1,20 @@
 <template>
     <main id="me" class="grid-container">
-        <h1>Me</h1>
-        <p>{{me}}</p>
-        <p>{{orderHistory}}</p>
+        <article class="col-3">
+        <h1>{{ me.name}}</h1>
+        <h2>{{ me.email}}</h2>
+        <p>{{me.role}}</p>
+        </article>
+        <article class="col-3">
+            {{ me.adress }}
+        </article>
+        <section class="order-history">
+            <article class="order-item" v-for="item in orderHistory" :key="item.orderNumber">
+
+    
+            </article>
+        </section>
+
     </main>
 </template>
 <script>

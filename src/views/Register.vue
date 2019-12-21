@@ -67,9 +67,13 @@ export default {
         }
     },
     methods: {
-        register(){
-            this.$store.dispatch('register', this.user)
-            .then(() => this.$router.push("/"))
+        async register(){
+            try {
+                await this.$store.dispatch('register', this.user)
+                await this.$router.push("/")
+            } catch(err) {
+                console.error(err);
+            }
         }
     }
 }

@@ -15,7 +15,7 @@
                 <p class="serial">{{item.serial}}</p>
             </article>
              <footer class="total">
-                <h1>Total</h1><h1>{{total.total}} kr</h1>
+                <h1>Total</h1><h1>{{total}} kr</h1>
             </footer>
         </section>
         <form class="col-3">

@@ -41,7 +41,7 @@ export default {
     },
     methods: {
         login(){
-            this.$store.dispatch('auth', this.credentials);
+            this.$store.dispatch('login', this.credentials);
             this.showModal = false;
         },
         logout(){

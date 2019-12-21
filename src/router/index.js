@@ -1,38 +1,45 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+
+import Home from '@/views/Home';
+import Pay from '@/views/Pay';
+import Register from '@/views/Register';
+import Documentation from '@/views/Documentation';
+import Me from '@/views/Me';
+import Admin from '@/views/Admin';
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: () => import('../views/Home.vue')
+    name: 'Home',
+    component: Home
   },
   {
     path: '/pay',
     name: 'Pay',
-    component: () => import('../views/Pay.vue')
+    component: Pay
   },
   {
     path: '/register',
     name: 'Register',
-    component: () => import('../views/Register.vue')
+    component: Register
   },
   {
     path: '/documentation',
     name: 'Documentation',
-    component: () => import('../views/Documentation.vue')
+    component: Documentation
   },
   {
     path: '/me',
     name: 'Me',
-    component: () => import('../views/Me.vue')
+    component: Me
   },
   {
     path: '/admin',
     name: 'Admin',
-    component: () => import('../views/Admin.vue')
+    component: Admin
   }
 ]
 

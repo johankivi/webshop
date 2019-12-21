@@ -15,7 +15,7 @@
                 <p class="price">{{item.price}} kr</p>
             </article>
             <footer class="total" v-if="cart.length">
-                <h1>Total</h1><h1>{{ total.total }} kr</h1>
+                <h1>Total</h1><h1>{{ total }} kr</h1>
             </footer>
             <a href="#" v-if="cart.length" class="btn large" @click="$router.push('/pay')">Take my Money!</a>
         </section>

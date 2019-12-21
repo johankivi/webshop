@@ -9,6 +9,7 @@ const api = axios.create({baseURL:'/api'})
 
 export default new Vuex.Store({
   state: {
+    loading: false,
     auth: {
       loggedIn: false,
       error: false,
@@ -46,11 +47,19 @@ export default new Vuex.Store({
     },
     auth(state, body){ 
       state.auth.user = body.user;
+      state.auth.loggedIn = true;
       api.defaults.headers.common['Authorization'] = `Bearer ${body.token}`
+
+      let user = body.user;
+      user.token = body.token;
+
+      // Set session
+      sessionStorage.setItem('sinus', JSON.stringify(user));      
+    
     },
     login(state){
       state.auth.loggedIn = true;
-      state.auth.error = false
+      state.auth.error = false;
     },
     failLogin(state){
       state.auth.login = false
@@ -61,9 +70,19 @@ export default new Vuex.Store({
       state.auth.loggedIn = false;
       state.auth.error = false
       delete api.defaults.headers.common['Authorization']
+      sessionStorage.removeItem('sinus');
     }
   },
   actions: {
+    checkAuth(ctx){
+      if(sessionStorage.getItem('sinus')){
+        ctx.state.auth.user = JSON.parse(sessionStorage.getItem('sinus'))
+        ctx.state.auth.loggedIn = true;
+      } else {
+        ctx.state.auth.loggedIn = false;
+        ctx.state.auth.user = null;
+      }
+    },
     showSingleProduct(ctx, item){
       ctx.commit('toggleOverlay')
       ctx.commit('setActiveProduct', item);
@@ -96,8 +115,10 @@ export default new Vuex.Store({
 
     },
     async readProducts(ctx){
+      ctx.state.loading = true;
       let response = await fetch('/api/products')
       let items = await response.json()
+      ctx.state.loading = false;
       ctx.commit('setProducts', items)
 
     },
@@ -112,6 +133,7 @@ export default new Vuex.Store({
       }
     },
     async register({commit}, newUser){
+
       try {
         let resp = await api.post('/register', newUser);
         if(resp.status == 200){
@@ -124,7 +146,7 @@ export default new Vuex.Store({
       }
     
     },
-    async auth({commit}, credentials){
+    async login({commit}, credentials){
 
       fetch('/api/auth', {
         method:'POST',
@@ -138,7 +160,6 @@ export default new Vuex.Store({
         let body = await response.json()
         if(response.status == 200){
           commit('auth', body )
-          commit('login')
         }else{
           throw new Error()
         }
