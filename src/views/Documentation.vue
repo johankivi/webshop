@@ -60,7 +60,9 @@
                         <td><span class="get">POST</span></td>
                        <td>Skapar en ny produkt, se produkt-modell.</td>
                     </tr>
+                     <!--
                     <tr>
+                   
                     <td>/products/:id</td>
                         <td><span class="get">PATCH</span></td>
                        <td>Uppdaterar produkt, se produkt-modell.</td>
@@ -70,6 +72,7 @@
                         <td><span class="get">DELETE</span></td>
                         <td>Tar bort en produkt med :id.</td>
                     </tr>
+                    -->
                 </tbody>
             </table>
             <h3>Orders</h3>
@@ -92,6 +95,7 @@
                         <td><span class="get">POST</span></td>
                        <td>Skapar en ny order, se order-modell.</td>
                     </tr>
+                    <!--
                     <tr>
                     <td>/orders/:orderNr</td>
                         <td><span class="get">PATCH</span></td>
@@ -102,6 +106,7 @@
                         <td><span class="get">DELETE</span></td>
                         <td>Tar bort en order med :orderNr.</td>
                     </tr>
+                    -->
                 </tbody>
             </table>
             <h3>Users</h3>
@@ -124,6 +129,7 @@
                         <td><span class="get">POST</span></td>
                        <td>Skapar en ny användare, se user-modell. Default-roll är <em>customer</em>.</td>
                     </tr>
+                    <!--
                     <tr>
                     <td>/user/:uuid</td>
                         <td><span class="get">PATCH</span></td>
@@ -134,6 +140,7 @@
                         <td><span class="get">DELETE</span></td>
                         <td>Tar bort en användare med :uuid. Endast admin har rättighet.</td>
                     </tr>
+                    -->
                 </tbody>
             </table>
         </article>
@@ -142,7 +149,6 @@
 <script>
 import { component as VueCodeHighlight } from 'vue-code-highlight';
 import '../../node_modules/vue-code-highlight/themes/prism-tomorrow.css';
-//import '../../node_modules/vue-code-highlight/themes/window.css';
 
 export default {
     name: 'Documentation',
@@ -170,13 +176,14 @@ export default {
     orderHistory: [ { order }, ... ]
 }`,
                 product: `{
-    id: 4,
+    _id: '39y7gbbZk1u4ABnv',
+    serial : '173891297371277',
     title: 'Gretas Fury',
     price: 999,
+    category: 'board',
     shortDesc: 'Unisex',
     longDesc: 'Skate ipsum dolor sit amet...',
-    imgFile: 'skateboard-greta.png',
-    serial: '127127838128877'
+    imgFile: 'skateboard-greta.png'
 }`,
                 order: `{
     orderNr: 123,
