@@ -35,7 +35,7 @@
                 <tbody>
                     <tr>
                         <td>/auth</td>
-                        <td><span class="get">POST</span></td>
+                        <td><span class="method">POST</span></td>
                        <td>Authentiserar user med <em>email</em> & <em>password</em>. Returnerar en <em>token</em> som används vid varje anrop till API.</td>
                     </tr>
                 </tbody>
@@ -52,24 +52,24 @@
                 <tbody>
                     <tr>
                         <td class="endpoint">/products</td>
-                        <td><span class="get">GET</span></td>
+                        <td><span class="method">GET</span></td>
                        <td>Returnerar en lista på samtliga produkter.</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><span class="get">POST</span></td>
+                        <td><span class="method">POST</span></td>
                        <td>Skapar en ny produkt, se produkt-modell.</td>
                     </tr>
                      <!--
                     <tr>
                    
                     <td>/products/:id</td>
-                        <td><span class="get">PATCH</span></td>
+                        <td><span class="method">PATCH</span></td>
                        <td>Uppdaterar produkt, se produkt-modell.</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><span class="get">DELETE</span></td>
+                        <td><span class="method">DELETE</span></td>
                         <td>Tar bort en produkt med :id.</td>
                     </tr>
                     -->
@@ -87,23 +87,23 @@
                 <tbody>
                     <tr>
                         <td class="endpoint">/orders</td>
-                        <td><span class="get">GET</span></td>
+                        <td><span class="method">GET</span></td>
                        <td>Returnerar en lista på samtliga ordrar.</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><span class="get">POST</span></td>
+                        <td><span class="method">POST</span></td>
                        <td>Skapar en ny order, se order-modell.</td>
                     </tr>
                     <!--
                     <tr>
                     <td>/orders/:orderNr</td>
-                        <td><span class="get">PATCH</span></td>
+                        <td><span class="method">PATCH</span></td>
                        <td>Uppdaterar order, se order-modell.</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><span class="get">DELETE</span></td>
+                        <td><span class="method">DELETE</span></td>
                         <td>Tar bort en order med :orderNr.</td>
                     </tr>
                     -->
@@ -121,23 +121,23 @@
                 <tbody>
                     <tr>
                         <td class="endpoint">/users</td>
-                        <td><span class="get">GET</span></td>
+                        <td><span class="method">GET</span></td>
                        <td>Returnerar en lista på samtliga användare. Endast tillgänglig för admins.</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><span class="get">POST</span></td>
+                        <td><span class="method">POST</span></td>
                        <td>Skapar en ny användare, se user-modell. Default-roll är <em>customer</em>.</td>
                     </tr>
                     <!--
                     <tr>
                     <td>/user/:uuid</td>
-                        <td><span class="get">PATCH</span></td>
+                        <td><span class="method">PATCH</span></td>
                        <td>Uppdaterar user, se user-modell. Endast tillgänglig för specifik user samt admin.</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><span class="get">DELETE</span></td>
+                        <td><span class="method">DELETE</span></td>
                         <td>Tar bort en användare med :uuid. Endast admin har rättighet.</td>
                     </tr>
                     -->
@@ -205,7 +205,7 @@ export default {
 
 #doc {
 
-    .get {
+    .method {
         display: inline-block;
         background: $lightGrey;
         padding: .25rem .5rem;
