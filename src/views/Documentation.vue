@@ -67,11 +67,13 @@
                         <td><span class="method">PATCH</span></td>
                        <td>Uppdaterar produkt, se produkt-modell.</td>
                     </tr>
+                    <!--
                     <tr>
                         <td></td>
                         <td><span class="method">DELETE</span></td>
                         <td>Tar bort en produkt med :id.</td>
                     </tr>
+                    -->
                 </tbody>
             </table>
             <h3>Orders</h3>
