@@ -55,6 +55,11 @@
                         <td><span class="method">GET</span></td>
                        <td>Returnerar en lista på samtliga produkter.</td>
                     </tr>
+                     <tr>
+                        <td class="endpoint">/products/:id</td>
+                        <td><span class="method">GET</span></td>
+                       <td>Returnerar en enstaka produkt.</td>
+                    </tr>
                     <tr>
                         <td></td>
                         <td><span class="method">POST</span></td>
