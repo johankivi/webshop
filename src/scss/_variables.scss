@@ -6,6 +6,7 @@ $middleGrey: rgba(0,0,0,.6);
 $darkGrey: rgba(0,0,0,.8);
 $red: rgb(218, 75, 75);
 $lightRed: rgba(218, 75, 75,.6);
+$darkRed: rgb(182, 45, 45);
 
 $round: .25rem;
 
@@ -39,6 +40,15 @@ $round: .25rem;
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    &.delete {
+        color: white;
+        background: $red;
+
+        &:hover {
+            background: $darkRed;
+        }
     }
 
     &:hover {

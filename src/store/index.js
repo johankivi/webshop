@@ -5,7 +5,7 @@ import axios from 'axios';
 
 Vue.use(Vuex)
 
-const api = axios.create({baseURL:'/api'})
+const api = axios.create({baseURL:'/api'});
 
 export default new Vuex.Store({
   state: {
@@ -76,11 +76,14 @@ export default new Vuex.Store({
   actions: {
     checkAuth(ctx){
       if(sessionStorage.getItem('sinus')){
-        ctx.state.auth.user = JSON.parse(sessionStorage.getItem('sinus'))
+        ctx.state.auth.user = JSON.parse(sessionStorage.getItem('sinus'));
+        api.defaults.headers.common['Authorization'] = `Bearer ${ctx.state.auth.user.token}`;
         ctx.state.auth.loggedIn = true;
+        console.log('User Authorized')
       } else {
         ctx.state.auth.loggedIn = false;
         ctx.state.auth.user = null;
+        console.log('User Not Authorized')
       }
     },
     showSingleProduct(ctx, item){
@@ -97,15 +100,9 @@ export default new Vuex.Store({
     },
     async createProduct(ctx, newProduct){
       try {
-        let resp = await fetch('/api/products', {
-          method:'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization' : `Bearer ${ctx.state.auth.token}`            
-          },
-          body: JSON.stringify(newProduct)
-        });
+
+        let resp = await api.post(newProduct);
+  
         // Handle resp
         console.log(resp);
       } catch(err) {
@@ -123,10 +120,26 @@ export default new Vuex.Store({
 
     },
     async updateProduct(ctx, updatedProduct){
+      console.log('updating product');
       try {
+      
         let resp = await api.patch(`/products/${updatedProduct._id}`, updatedProduct);
         // Handle resp
         console.log(resp);
+
+      } catch(err) {
+        // Handle err
+        console.error(err);
+      }
+    },
+    async removeProduct(ctx, productToBeRemoved){
+
+      try {
+
+        let resp = await api.delete(`/products/${productToBeRemoved._id}`, productToBeRemoved._id)
+        // Handle resp
+        console.log(resp);
+
       } catch(err) {
         // Handle err
         console.error(err);

@@ -56,6 +56,16 @@ export default {
 
         this.toggleOverlay();
     },
+    remove(){
+
+        if(this.$parent.edit){
+          console.log(this.product)
+          // New product
+          this.$store.dispatch('removeProduct', this.product)
+        }
+
+        this.toggleOverlay();
+    },
     toggleOverlay(){
       this.$parent.showModal = false;
 
@@ -98,6 +108,10 @@ export default {
     max-width: 40rem;
     background: white;
     z-index: 999;
+  }
+
+  .split {
+    justify-content: space-between;
   }
 
 }
