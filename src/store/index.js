@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-// import Items from './storedata';
+import router from '../router';
+
 
 Vue.use(Vuex)
 
@@ -76,7 +77,7 @@ export default new Vuex.Store({
   actions: {
     checkAuth(ctx){
       if(sessionStorage.getItem('sinus')){
-        ctx.state.auth.user = JSON.parse(sessionStorage.getItem('sinus'));
+        ctx.state.auth.user = JSON.parse(sessionStorage.getItem('sinus'));  
         api.defaults.headers.common['Authorization'] = `Bearer ${ctx.state.auth.user.token}`;
         ctx.state.auth.loggedIn = true;
         console.log('User Authorized')
@@ -91,12 +92,21 @@ export default new Vuex.Store({
       ctx.commit('setActiveProduct', item);
     },
     async submitOrder(ctx, order){
+      try {
+
       order.items = order.items.map(item => item._id)
       
       let response = await api.post('/orders', order)
-  
       console.log(response)
+      if(response.status == 200){
+        router.push('/thankyou');
+      }
+
+    } catch(err) {
+
+        console.log(err);
       
+      }
     },
     async createProduct(ctx, newProduct){
       try {
@@ -185,7 +195,6 @@ export default new Vuex.Store({
     async logout({commit}){
       commit('logout')
     },
-
     async readOrders({commit}){
       const response = await api.get('/orders')
       commit('setOrderHistory', response.data)

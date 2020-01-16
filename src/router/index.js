@@ -7,6 +7,7 @@ import Register from '@/views/Register';
 import Documentation from '@/views/Documentation';
 import Me from '@/views/Me';
 import Admin from '@/views/Admin';
+import Thanks from '@/views/Thankyou';
 
 Vue.use(VueRouter)
 
@@ -20,6 +21,11 @@ const routes = [
     path: '/pay',
     name: 'Pay',
     component: Pay
+  },
+  {
+    path: '/thankyou',
+    name: 'thankyou',
+    component: Thanks
   },
   {
     path: '/register',
