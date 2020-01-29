@@ -28,6 +28,7 @@
           <textarea rows="3" v-model="activeProduct.longDesc"></textarea>
         </label>
         <footer class="col-4">
+          <a href="#" class="btn delete" @click.prevent="remove">Delete</a>
           <a href="#" class="btn" @click.prevent="submit">Submit</a>
         </footer>
       </form>
@@ -57,13 +58,9 @@ export default {
         this.toggleOverlay();
     },
     remove(){
-
-        if(this.$parent.edit){
-          console.log(this.product)
-          // New product
+        if(this.$parent.edit){          
           this.$store.dispatch('removeProduct', this.product)
         }
-
         this.toggleOverlay();
     },
     toggleOverlay(){
@@ -111,6 +108,11 @@ export default {
   }
 
   .split {
+    justify-content: space-between;
+  }
+
+  footer{
+    display: flex;
     justify-content: space-between;
   }
 

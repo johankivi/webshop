@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import './registerServiceWorker'
+// import './registerServiceWorker' "@vue/cli-plugin-pwa": "^4.1.0",
 import router from './router'
 import store from './store'
 

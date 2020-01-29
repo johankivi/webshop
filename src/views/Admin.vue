@@ -50,7 +50,7 @@ export default {
         imgFile: 'skateboard-generic.png',
         title: '',
         serial: Date.now(),
-        price: Number,
+        price: 0,
         shortDesc: '',
         longDesc: ''
       }
@@ -67,7 +67,9 @@ export default {
     }
   },
   mounted(){
-    
+    if(this.$store.state.items.length == 0){
+      this.$store.dispatch('readProducts')
+    }
   }
 }
 </script>

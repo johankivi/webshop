@@ -29,8 +29,8 @@ export default {
         return {
             showModal: false,
             credentials: {
-                email: 'customer@example.com',
-                password: 'omg'
+                email: '',
+                password: ''
             }
         }
     },

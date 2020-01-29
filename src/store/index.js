@@ -1,12 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import axios from 'axios';
 import router from '../router';
-
+import api from '@/api'
 
 Vue.use(Vuex)
-
-const api = axios.create({baseURL:'/api'});
 
 export default new Vuex.Store({
   state: {
@@ -19,7 +16,7 @@ export default new Vuex.Store({
         role: 'anonymous'
       }
     },
-    items: null,
+    items: [],
     overlay: { 
       active: false,
       product: null
@@ -43,161 +40,151 @@ export default new Vuex.Store({
     setProducts(state, products){
       state.items = products;
     },
+    addProduct(state, product){
+      state.items.push(product)
+      state.items = state.items.sort((a,b) => a.title > b.title)
+    },
+    updateProduct(state, updatedProduct){
+      state.items = state.items.map(
+        product => product._id == updatedProduct._id ? updatedProduct : product
+      )
+    },
+    removeProduct(state, productId){
+      state.items = state.items.filter(
+        product => product._id != productId
+      )
+    },
     setOrderHistory(state, orders){
       state.orderHistory = orders
     },
     auth(state, body){ 
       state.auth.user = body.user;
       state.auth.loggedIn = true;
-      api.defaults.headers.common['Authorization'] = `Bearer ${body.token}`
 
-      let user = body.user;
-      user.token = body.token;
+      api.setAuthHeader(body.token)
+
+      const user = body.user;
+      const token = body.token
 
       // Set session
-      sessionStorage.setItem('sinus', JSON.stringify(user));      
+      sessionStorage.setItem('sinus', JSON.stringify({user,token}));      
     
     },
     login(state){
       state.auth.loggedIn = true;
       state.auth.error = false;
+
     },
     failLogin(state){
       state.auth.login = false
       state.auth.error = true
-      delete api.defaults.headers.common['Authorization']
+      api.clearAuthHeader();
     },
     logout(state){
       state.auth.loggedIn = false;
       state.auth.error = false
-      delete api.defaults.headers.common['Authorization']
+      api.clearAuthHeader()
       sessionStorage.removeItem('sinus');
     }
   },
   actions: {
-    checkAuth(ctx){
+    checkAuth({commit}){
       if(sessionStorage.getItem('sinus')){
-        ctx.state.auth.user = JSON.parse(sessionStorage.getItem('sinus'));  
-        api.defaults.headers.common['Authorization'] = `Bearer ${ctx.state.auth.user.token}`;
-        ctx.state.auth.loggedIn = true;
+        const persistedData = JSON.parse(sessionStorage.getItem('sinus'))
+        commit('auth', persistedData)
         console.log('User Authorized')
       } else {
-        ctx.state.auth.loggedIn = false;
-        ctx.state.auth.user = null;
+        commit('logout')
         console.log('User Not Authorized')
       }
     },
-    showSingleProduct(ctx, item){
-      ctx.commit('toggleOverlay')
-      ctx.commit('setActiveProduct', item);
-    },
-    async submitOrder(ctx, order){
-      try {
 
+    showSingleProduct({commit}, item){
+      commit('toggleOverlay')
+      commit('setActiveProduct', item);
+    },
+
+    submitOrder(_, order){
       order.items = order.items.map(item => item._id)
-      
-      let response = await api.post('/orders', order)
-      console.log(response)
-      if(response.status == 200){
+      api.post('/orders', order)
+      .then(response => {
+        console.log(response)
         router.push('/thankyou');
-      }
-
-    } catch(err) {
-
-        console.log(err);
-      
-      }
-    },
-    async createProduct(ctx, newProduct){
-      try {
-
-        let resp = await api.post(newProduct);
-  
-        // Handle resp
-        console.log(resp);
-      } catch(err) {
-        // Handle err
-        console.error(err);
-      }
-
-    },
-    async readProducts(ctx){
-      ctx.state.loading = true;
-      let response = await fetch('/api/products')
-      let items = await response.json()
-      ctx.state.loading = false;
-      ctx.commit('setProducts', items)
-
-    },
-    async updateProduct(ctx, updatedProduct){
-      console.log('updating product');
-      try {
-      
-        let resp = await api.patch(`/products/${updatedProduct._id}`, updatedProduct);
-        // Handle resp
-        console.log(resp);
-
-      } catch(err) {
-        // Handle err
-        console.error(err);
-      }
-    },
-    async removeProduct(ctx, productToBeRemoved){
-
-      try {
-
-        let resp = await api.delete(`/products/${productToBeRemoved._id}`, productToBeRemoved._id)
-        // Handle resp
-        console.log(resp);
-
-      } catch(err) {
-        // Handle err
-        console.error(err);
-      }
-    },
-    async register({commit}, newUser){
-
-      try {
-        let resp = await api.post('/register', newUser);
-        if(resp.status == 200){
-          commit('auth', resp.data)
-          commit('login')
-        }
-      } catch(err) {
-        // Handle err
-        console.error(err);
-      }
-    
-    },
-    async login({commit}, credentials){
-
-      fetch('/api/auth', {
-        method:'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
       })
-      .then(async response => {
-        let body = await response.json()
-        if(response.status == 200){
-          commit('auth', body )
-        }else{
-          throw new Error()
-        }
+      .catch(console.log)
+    },
+
+    createProduct({commit}, newProduct){
+      api.post('/products', newProduct)
+      .then(response => {
+        console.log(response)
+        commit('addProduct', response.data.product)
+      })
+      .catch(console.log)
+    },
+
+    readProducts({commit,state}){
+      state.loading = true;
+      api.get('/products')
+      .then(response => {
+        console.log(response)
+        state.loading = false;
+        commit('setProducts', response.data)
+      })  
+      .catch(console.log)
+    },
+
+    updateProduct({commit}, updatedProduct){
+      api.patch(`/products/${updatedProduct._id}`, updatedProduct)
+      .then(response => {
+        console.log(response)
+        commit('updateProduct', updatedProduct)
+      })
+      .catch(console.log)
+    },
+
+    removeProduct({commit}, productToBeRemoved){
+      api.delete(`/products/${productToBeRemoved._id}`)
+      .then(response => {
+        console.log(response)
+        commit('removeProduct', productToBeRemoved._id)
+      })
+      .catch(console.log)
+    },
+
+    register({commit}, newUser){
+      api.post('/register', newUser)
+      .then(response => {
+        console.log(response)
+        commit('auth', response.data)
+        commit('login')
+      })
+      .catch(console.log)
+    },
+
+    login({commit}, credentials){
+      api.post('/auth', credentials)
+      .then(response => {
+        console.log(response)
+        commit('auth', response.data)
       })
       .catch(error => {
+        console.log(error)
         commit('failLogin')
       })
     },
 
-    async logout({commit}){
+    logout({commit}){
       commit('logout')
     },
-    async readOrders({commit}){
-      const response = await api.get('/orders')
-      commit('setOrderHistory', response.data)
+
+    readOrders({commit}){
+      api.get('/orders')
+      .then(response => {
+        console.log(response)
+        commit('setOrderHistory', response.data)
+      })
+      .catch(console.log)
     }
   },
   getters: {
