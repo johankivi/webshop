@@ -34,9 +34,26 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>/auth</td>
+                        <td>/api/auth</td>
                         <td><span class="method">POST</span></td>
-                       <td>Authentiserar user med <em>email</em> & <em>password</em>. Returnerar en <em>token</em> som används vid varje anrop till API.</td>
+                       <td>Authentiserar user med <em>email</em> & <em>password</em>. Returnerar en <em>JWT-token</em> som används vid varje anrop API:et i en <em>Authorization</em>-header.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>Registration</h3>
+            <table cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Resurs</th>
+                        <th>Metod</th>
+                        <th>Detaljer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>/api/register</td>
+                        <td><span class="method">POST</span></td>
+                       <td>Registrerar en user enligt User-modellen.</td>
                     </tr>
                 </tbody>
             </table>
@@ -51,34 +68,34 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="endpoint">/products</td>
+                        <td class="endpoint">/api/products</td>
                         <td><span class="method">GET</span></td>
                        <td>Returnerar en lista på samtliga produkter.</td>
                     </tr>
                      <tr>
-                        <td class="endpoint">/products/:id</td>
+                        <td class="endpoint">/api/products/:id</td>
                         <td><span class="method">GET</span></td>
                        <td>Returnerar en enstaka produkt.</td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td>/api/products/</td>
                         <td><span class="method">POST</span></td>
                        <td>Skapar en ny produkt, se produkt-modell.</td>
                     </tr>
                     
                     <tr>
                    
-                    <td>/products/:id</td>
+                    <td>/api/products/:id</td>
                         <td><span class="method">PATCH</span></td>
                        <td>Uppdaterar produkt, se produkt-modell.</td>
                     </tr>
-                    <!--
+                    
                     <tr>
-                        <td></td>
+                        <td>/api/products/:id</td>
                         <td><span class="method">DELETE</span></td>
                         <td>Tar bort en produkt med :id.</td>
                     </tr>
-                    -->
+                    
                 </tbody>
             </table>
             <h3>Orders</h3>
@@ -92,12 +109,12 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="endpoint">/orders</td>
+                        <td class="endpoint">/api/orders</td>
                         <td><span class="method">GET</span></td>
                        <td>Returnerar en lista på samtliga ordrar.</td>
                     </tr>
                     <tr>
-                        <td></td>
+                        <td>/api/orders</td>
                         <td><span class="method">POST</span></td>
                        <td>Skapar en ny order, se order-modell.</td>
                     </tr>
@@ -115,7 +132,7 @@
                     -->
                 </tbody>
             </table>
-            <h3>Users</h3>
+            <!-- <h3>Users</h3>
             <table cellspacing="0">
                 <thead>
                     <tr>
@@ -135,7 +152,7 @@
                         <td><span class="method">POST</span></td>
                        <td>Skapar en ny användare, se user-modell. Default-roll är <em>customer</em>.</td>
                     </tr>
-                    <!--
+                    
                     <tr>
                     <td>/user/:uuid</td>
                         <td><span class="method">PATCH</span></td>
@@ -146,9 +163,9 @@
                         <td><span class="method">DELETE</span></td>
                         <td>Tar bort en användare med :uuid. Endast admin har rättighet.</td>
                     </tr>
-                    -->
+                    
                 </tbody>
-            </table>
+            </table> -->
         </article>
     </main>
 </template>
@@ -162,11 +179,11 @@ export default {
         return {
             code: {
                 user: `{
-    uuid: '6b521d3f-3d15...' // add server side
+    _id: '6b521d3f-3d15...' // add server side
     email: 'johan.kivi@zocom.se',
-    password: [encrypted string],
+    password: 'hashed password',
     name: 'Johan Kivi',
-    role: 'admin', // customer
+    role: 'admin', // or customer
 
     adress: {
         street: 'Tokitokvägen 3',
@@ -179,23 +196,22 @@ export default {
         validUntil: '10 / 23',
         cvv: '123'
     },
-    orderHistory: [ { order }, ... ]
+    orderHistory: [ orderId1, orderId2, ... ]
 }`,
                 product: `{
     _id: '39y7gbbZk1u4ABnv',
     serial : '173891297371277',
     title: 'Gretas Fury',
     price: 999,
-    category: 'board',
     shortDesc: 'Unisex',
     longDesc: 'Skate ipsum dolor sit amet...',
     imgFile: 'skateboard-greta.png'
 }`,
                 order: `{
-    orderNr: 123,
+    _id: 123,
     timeStamp: Date.now(), // add server side
     status: 'inProcess', // done
-    items: [ product ],
+    items: [ productId1, productId2, ... ],
     orderValue: 999
 }`
             }
