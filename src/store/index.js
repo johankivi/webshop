@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import router from '../router';
-import api from '@/api'
+import * as API from '@/api'
 
 Vue.use(Vuex)
 
@@ -36,7 +36,7 @@ export default new Vuex.Store({
     },
     removeFromCart(state, index){
       state.cart.splice(index,1);
-    },
+    },    
     setProducts(state, products){
       state.items = products;
     },
@@ -61,7 +61,7 @@ export default new Vuex.Store({
       state.auth.user = body.user;
       state.auth.loggedIn = true;
 
-      api.setAuthHeader(body.token)
+      API.setAuthHeader(body.token)
 
       const user = body.user;
       const token = body.token
@@ -78,12 +78,14 @@ export default new Vuex.Store({
     failLogin(state){
       state.auth.login = false
       state.auth.error = true
-      api.clearAuthHeader();
+      API.clearAuthHeader();
     },
     logout(state){
       state.auth.loggedIn = false;
       state.auth.error = false
-      api.clearAuthHeader()
+      API.clearAuthHeader()
+      state.cart = []
+      state.orderHistory = []
       sessionStorage.removeItem('sinus');
     }
   },
@@ -106,67 +108,60 @@ export default new Vuex.Store({
 
     submitOrder(_, order){
       order.items = order.items.map(item => item._id)
-      api.post('/orders', order)
-      .then(response => {
-        console.log(response)
+      API.createOrder(order)
+      .then( () => {      
         router.push('/thankyou');
       })
       .catch(console.log)
     },
 
-    createProduct({commit}, newProduct){
-      api.post('/products', newProduct)
-      .then(response => {
-        console.log(response)
-        commit('addProduct', response.data.product)
+    createProduct({commit}, newProduct){      
+      API.createProduct(newProduct)
+      .then( product => {
+        commit('addProduct', product)
       })
       .catch(console.log)
     },
 
     readProducts({commit,state}){
       state.loading = true;
-      api.get('/products')
-      .then(response => {
-        console.log(response)
+      API.fetchProducts()
+      .then( products => {               
         state.loading = false;
-        commit('setProducts', response.data)
+        commit('setProducts', products)
       })  
       .catch(console.log)
     },
 
     updateProduct({commit}, updatedProduct){
-      api.patch(`/products/${updatedProduct._id}`, updatedProduct)
-      .then(response => {
-        console.log(response)
+      API.updateProduct(updatedProduct)
+      .then( result => {
         commit('updateProduct', updatedProduct)
       })
       .catch(console.log)
     },
 
     removeProduct({commit}, productToBeRemoved){
-      api.delete(`/products/${productToBeRemoved._id}`)
-      .then(response => {
-        console.log(response)
+      API.removeProduct(productToBeRemoved)
+      .then( () => {
         commit('removeProduct', productToBeRemoved._id)
       })
       .catch(console.log)
     },
 
-    register({commit}, newUser){
-      api.post('/register', newUser)
-      .then(response => {
-        console.log(response)
-        commit('auth', response.data)
+    register({commit}, newUser){      
+      API.register(newUser)
+      .then( user => {        
+        commit('auth', user )
         commit('login')
       })
       .catch(console.log)
     },
 
-    login({commit}, credentials){
-      api.post('/auth', credentials)
-      .then(response => {
-        console.log(response)
-        commit('auth', response.data)
+    login({commit}, credentials){      
+      API.login(credentials)
+      .then(tokenData => {        
+        commit('auth', tokenData)
       })
       .catch(error => {
         console.log(error)
@@ -178,11 +173,10 @@ export default new Vuex.Store({
       commit('logout')
     },
 
-    readOrders({commit}){
-      api.get('/orders')
-      .then(response => {
-        console.log(response)
-        commit('setOrderHistory', response.data)
+    readOrders({commit}){      
+      API.fetchOrders()
+      .then(orders => {      
+        commit('setOrderHistory', orders)
       })
       .catch(console.log)
     }

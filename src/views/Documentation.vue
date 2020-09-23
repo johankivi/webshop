@@ -200,7 +200,6 @@ export default {
 }`,
                 product: `{
     _id: '39y7gbbZk1u4ABnv',
-    serial : '173891297371277',
     title: 'Gretas Fury',
     price: 999,
     shortDesc: 'Unisex',
